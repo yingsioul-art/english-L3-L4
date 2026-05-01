@@ -76,9 +76,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .chunk-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:8px;text-align:left;display:none;}
 .chunk-box.on{display:block;animation:fadeU .2s ease;}
 .chunk-ttl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--purple);font-weight:900;margin-bottom:7px;}
-.chunk-item{font-size:13px;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border);}
+.chunk-item{padding:6px 0;border-bottom:1px solid var(--border);}
 .chunk-item:last-child{border-bottom:none;}
-.chunk-item b{color:var(--teal);}
+.chunk-en{font-size:13px;color:var(--teal);font-weight:800;}
+.chunk-zh{font-size:12px;color:var(--muted);margin-top:2px;}
 .fc-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .fc-ctr{font-size:13px;color:var(--muted);font-weight:800;}
 
@@ -145,7 +146,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .cap-badge{display:inline-flex;align-items:center;gap:5px;background:#fef0f0;border:1px solid #f8cccc;border-radius:100px;padding:3px 10px;font-size:11px;font-weight:900;color:var(--accent2);margin-bottom:9px;}
 .order-bar{display:flex;align-items:center;gap:7px;margin-bottom:10px;padding:7px 12px;background:var(--card2);border:1px solid var(--border);border-radius:9px;}
 .order-bar label{font-size:12px;color:var(--muted);font-weight:800;flex:1;}
-.order-btn{padding:5px 12px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18px;}
+.order-btn{padding:5px 12px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
 .order-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
 .order-btn:hover:not(.on){border-color:var(--accent);color:var(--accent);}
 .wnum{display:inline-block;min-width:28px;font-size:12px;color:var(--muted);font-weight:800;vertical-align:middle;}
@@ -161,7 +162,97 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .snum{font-family:'Fredoka One',cursive;font-size:32px;color:var(--accent);}
 .slbl{font-size:11px;color:var(--muted);font-weight:800;}
 
-@media(max-width:580px){.choice-grid{grid-template-columns:1fr;}.unit-nav{grid-template-columns:repeat(4,1fr);}.sum-row{gap:14px;}}
+/* ── DIALOGUE ── */
+.dial-controls{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;padding:8px 12px;background:var(--card2);border:1px solid var(--border);border-radius:9px;align-items:center;}
+.dial-controls label{font-size:12px;color:var(--muted);font-weight:800;flex:1;}
+.mode-btn{padding:5px 12px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
+.mode-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.mode-btn:hover:not(.on){border-color:var(--accent);color:var(--accent);}
+.dial-scene{background:var(--card2);border-left:4px solid var(--gold);border-radius:8px;padding:8px 14px;margin-bottom:8px;font-size:13px;color:var(--gold);font-weight:800;}
+.dial-line{display:flex;gap:10px;padding:9px 12px;border-radius:9px;border:1px solid var(--border);margin-bottom:6px;background:var(--card);transition:background .15s;cursor:pointer;}
+.dial-line:hover{background:#eef3ff;}
+.dial-line.scene-line{background:var(--card2);cursor:default;}
+.dial-line.scene-line:hover{background:var(--card2);}
+.dial-speaker{font-weight:900;font-size:13px;min-width:72px;padding-top:2px;flex-shrink:0;}
+.sp-yash,.sp-lisa{color:var(--teal);}
+.sp-mswang,.sp-joe{color:var(--accent);}
+.sp-may{color:var(--purple);}
+.dial-body{flex:1;}
+.dial-en{font-size:14px;font-weight:700;line-height:1.6;color:var(--text);}
+.dial-en .kw{background:#e8f0ff;color:var(--accent);border-radius:3px;padding:0 3px;font-weight:900;border-bottom:2px solid var(--accent);}
+.dial-zh{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.dial-note{font-size:11.5px;color:var(--green);margin-top:4px;background:#eefbf4;border-radius:5px;padding:3px 7px;display:none;}
+.dial-note.show{display:block;}
+.dial-snd{background:rgba(45,107,228,.1);border:1px solid rgba(45,107,228,.25);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:800;color:var(--accent);cursor:pointer;margin-top:4px;display:inline-block;}
+.dial-snd:hover{background:rgba(45,107,228,.2);}
+.zh-toggle{padding:5px 12px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
+.zh-toggle.on{border-color:var(--green);color:var(--green);background:#eefbf4;}
+/* fill-in-the-blank for dialogue */
+.fill-card{background:var(--card2);border-radius:12px;padding:16px;margin-bottom:10px;border:1px solid var(--border);}
+.fill-speaker{font-weight:900;font-size:13px;color:var(--accent);margin-bottom:6px;}
+.fill-zh{font-size:13px;color:var(--muted);margin-bottom:9px;}
+.fill-en{font-size:15px;font-weight:700;line-height:1.7;margin-bottom:10px;color:var(--text);}
+.fill-input{border:none;border-bottom:2.5px solid var(--accent);background:transparent;font-family:var(--font);font-size:15px;font-weight:800;color:var(--accent);width:110px;text-align:center;outline:none;padding:1px 4px;}
+.fill-input:focus{border-color:var(--teal);}
+.fill-input.ok{border-color:var(--green);color:var(--green);}
+.fill-input.no{border-color:var(--accent2);color:var(--accent2);}
+/* ── RANGE SELECTOR ── */
+#rangeSelector{background:var(--card);border:1.5px solid var(--accent);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 12px rgba(45,107,228,.12);display:none;}
+#rangeSelector.show{display:block;animation:fadeU .25s ease;}
+.range-title{font-family:'Fredoka One',cursive;font-size:15px;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.range-tabs{display:flex;gap:6px;margin-bottom:10px;}
+.rtab{padding:5px 13px;border-radius:7px;border:1.5px solid var(--border);background:var(--card2);color:var(--muted);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
+.rtab.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.range-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.rpill{padding:6px 14px;border-radius:100px;font-size:12.5px;font-weight:800;border:1.5px solid var(--border);color:var(--muted);background:var(--card2);cursor:pointer;transition:all .18s;}
+.rpill.on{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(45,107,228,.25);}
+.rpill:hover:not(.on){border-color:var(--accent);color:var(--accent);}
+.range-info{margin-top:9px;font-size:12px;color:var(--muted);font-weight:700;}
+.range-info span{color:var(--accent);font-weight:900;}
+/* custom range picker */
+.custom-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.custom-tools label{font-size:12px;color:var(--muted);font-weight:800;}
+.range-inp{padding:5px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:12px;font-weight:800;color:var(--text);width:110px;outline:none;background:var(--card2);}
+.range-inp:focus{border-color:var(--accent);}
+.range-inp-btn{padding:5px 11px;border-radius:7px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;}
+.num-grid{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.nchk{min-width:36px;height:36px;padding:0 6px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1.5px solid var(--border);background:var(--card2);color:var(--muted);font-family:var(--font);font-weight:900;font-size:12px;cursor:pointer;transition:all .15s;user-select:none;}
+.nchk.on{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 2px 6px rgba(45,107,228,.3);}
+.nchk:hover:not(.on){border-color:var(--accent);color:var(--accent);}
+.nchk.no-num{font-size:10.5px;min-width:44px;}
+.custom-footer{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap;}
+.custom-count{font-size:12px;color:var(--muted);font-weight:800;flex:1;}
+.custom-count span{color:var(--accent);font-weight:900;}
+/* front face sound button */
+.fc-front-snd{
+  background:rgba(45,107,228,.12);border:1.5px solid rgba(45,107,228,.3);
+  border-radius:100px;padding:5px 14px;font-size:12px;font-weight:800;
+  color:var(--accent);cursor:pointer;margin-top:8px;transition:all .18s;
+}
+.fc-front-snd:hover{background:rgba(45,107,228,.22);}
+
+.rdg-controls{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;padding:8px 12px;background:var(--card2);border:1px solid var(--border);border-radius:9px;align-items:center;}
+.rdg-controls label{font-size:12px;color:var(--muted);font-weight:800;flex:1;}
+.rdg-para{border-radius:10px;border:1px solid var(--border);margin-bottom:10px;overflow:hidden;cursor:pointer;transition:box-shadow .15s;}
+.rdg-para:hover{box-shadow:0 2px 12px rgba(45,107,228,.15);}
+.rdg-para-hdr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card2);}
+.rdg-num{font-family:'Fredoka One',cursive;font-size:17px;color:var(--accent);min-width:24px;}
+.rdg-title{font-weight:800;font-size:13px;color:var(--muted);flex:1;}
+.rdg-toggle{font-size:12px;color:var(--accent);font-weight:800;flex-shrink:0;}
+.rdg-body{padding:12px 14px 14px;background:var(--card);display:none;}
+.rdg-body.open{display:block;animation:fadeU .2s ease;}
+.rdg-en{font-size:14px;font-weight:700;line-height:2.0;color:var(--text);margin-bottom:8px;}
+.rdg-en .kw{background:#e8f0ff;color:var(--accent);border-radius:3px;padding:0 3px;font-weight:900;border-bottom:2px solid var(--accent);}
+.rdg-zh{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:10px;border-left:3px solid var(--border);padding-left:10px;}
+.rdg-notes{display:flex;flex-direction:column;gap:5px;}
+.rdg-note-item{font-size:12.5px;background:#eefbf4;border-radius:7px;padding:6px 10px;color:var(--green);border:1px solid #b2e0cc;}
+.rdg-snd{background:rgba(45,107,228,.1);border:1px solid rgba(45,107,228,.25);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:800;color:var(--accent);cursor:pointer;margin-top:8px;display:inline-block;}
+.rdg-snd:hover{background:rgba(45,107,228,.2);}
+.rdg-fill-card{background:var(--card2);border-radius:12px;padding:16px;margin-bottom:10px;border:1px solid var(--border);}
+.rdg-fill-label{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:8px;}
+.rdg-fill-en{font-size:14.5px;font-weight:700;line-height:2.0;color:var(--text);}
+@media(max-width:580px){.choice-grid{grid-template-columns:1fr;}.unit-nav{grid-template-columns:repeat(5,1fr);}.sum-row{gap:14px;}
+.dial-line{flex-direction:column;gap:5px;}.dial-speaker{min-width:auto;}}
 </style>
 </head>
 <body>
@@ -187,6 +278,34 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </button>
 </div>
 
+<!-- RANGE SELECTOR (shown for units 1-4) -->
+<div id="rangeSelector">
+  <div class="range-title">🎯 選擇練習範圍</div>
+  <div class="range-tabs">
+    <button class="rtab on" id="rtabCat">📚 按類別</button>
+    <button class="rtab" id="rtabNum">🔢 按序號</button>
+    <button class="rtab" id="rtabCustom">✏️ 自訂</button>
+  </div>
+  <!-- cat / num pills -->
+  <div class="range-pills" id="rangePills"></div>
+  <!-- custom picker (hidden by default) -->
+  <div id="customPicker" style="display:none;">
+    <div class="custom-tools">
+      <label>快速輸入：</label>
+      <input class="range-inp" id="rangeInp" placeholder="例：1-10, 15, 20-25">
+      <button class="range-inp-btn" id="rangeInpBtn">套用</button>
+      <button class="range-inp-btn" style="background:var(--green);" id="selectAllBtn">全選</button>
+      <button class="range-inp-btn" style="background:var(--muted);" id="clearAllBtn">全不選</button>
+    </div>
+    <div class="num-grid" id="numGrid"></div>
+    <div class="custom-footer">
+      <div class="custom-count">已選：<span id="customCount">0</span> 個單字</div>
+      <button class="btn btn-primary" id="applyCustom" style="font-size:12px;padding:6px 14px;">確認套用 ✓</button>
+    </div>
+  </div>
+  <div class="range-info">目前範圍：<span id="rangeInfoTxt">全部 (39 個)</span></div>
+</div>
+
 <!-- UNIT NAV -->
 <nav class="unit-nav" id="unitNav">
   <button class="unav on" data-unit="1"><span class="ui">🃏</span>單字卡</button>
@@ -196,13 +315,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   <button class="unav" data-unit="5"><span class="ui">💬</span>句型</button>
   <button class="unav" data-unit="6"><span class="ui">⚙️</span>文法</button>
   <button class="unav" data-unit="7"><span class="ui">📖</span>閱讀</button>
+  <button class="unav" data-unit="8"><span class="ui">🗣️</span>對話</button>
+  <button class="unav" data-unit="9"><span class="ui">📄</span>課文</button>
 </nav>
 
 <!-- P1 FLASHCARDS -->
 <div class="panel on" id="p1">
   <div class="card">
     <div class="stitle" id="stitle1">🃏 單字卡</div>
-    <div class="group-pills" id="groupPills"></div>
     <div class="prog-wrap"><div class="prog-fill" id="fcProg" style="width:0%"></div></div>
     <div class="fc-scene" id="fcScene">
       <div class="fc-inner" id="fcInner">
@@ -210,7 +330,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
           <div class="fc-pos" id="fcPos"></div>
           <div class="fc-en" id="fcEn"></div>
           <div class="fc-zh" id="fcZh"></div>
-          <div class="fc-tip">👆 點卡翻面看例句</div>
+          <button class="fc-front-snd" id="btnSndFront">🔊 發音</button>
+          <div class="fc-tip" style="margin-top:6px;">👆 點卡翻面看例句</div>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-pos" id="fcPosB" style="color:var(--purple)"></div>
@@ -322,6 +443,45 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
 </div>
 
+<!-- P8 DIALOGUE -->
+<div class="panel" id="p8">
+  <div class="card">
+    <div class="stitle" id="dialTitle">🗣️ 課文對話解析</div>
+    <div class="dial-controls">
+      <label>模式：</label>
+      <button class="mode-btn on" id="dialModeRead">📖 閱讀模式</button>
+      <button class="mode-btn" id="dialModeFill">✏️ 填空練習</button>
+      <button class="zh-toggle" id="zhToggle">🇨🇳 顯示中文</button>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="dialProg" style="width:0%"></div></div>
+    <div id="dialArea"></div>
+    <!-- fill-in buttons (hidden in read mode) -->
+    <div class="action-row" id="fillBtns" style="display:none;">
+      <button class="btn btn-primary" id="btnCheckFill">確認 ✓</button>
+      <button class="btn btn-secondary" id="btnNextFill">換一句 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- P9 READING TEXT -->
+<div class="panel" id="p9">
+  <div class="card">
+    <div class="stitle" id="rdgTitle">📄 課文 Reading 逐段解析</div>
+    <div class="rdg-controls">
+      <label>模式：</label>
+      <button class="mode-btn on" id="rdgModeRead">📖 閱讀模式</button>
+      <button class="mode-btn" id="rdgModeFill">✏️ 填空練習</button>
+      <button class="zh-toggle" id="rdgZhToggle">🇨🇳 顯示中文</button>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="rdgProg" style="width:0%"></div></div>
+    <div id="rdgArea"></div>
+    <div class="action-row" id="rdgFillBtns" style="display:none;">
+      <button class="btn btn-primary" id="btnCheckRdgFill">確認 ✓</button>
+      <button class="btn btn-secondary" id="btnNextRdgFill">換一題 →</button>
+    </div>
+  </div>
+</div>
+
 <div class="summary" id="summary">
   <div class="sum-title" id="sumTitle">🎉 今日練習完成！</div>
   <div class="sum-row">
@@ -412,10 +572,34 @@ const L3READ={
   cap:"課文 Reading「世界各地新年慶祝方式」與 111 年會考說明文閱讀高度吻合。介系詞 on/in/at 是 112、113 年必考考點！"
 };
 
+// ── L3 DIALOGUE ──
+const L3DIAL=[
+  {type:"scene",text:"（Yash 正在和他的老師 Ms. Wang 說話。Yash is talking to his teacher, Ms. Wang.）"},
+  {speaker:"Yash",    sp:"yash",   en:"Excuse me, Ms. Wang?",                                zh:"打擾了，王老師？",                          keys:["Excuse me"],              note:"Excuse me = 打擾一下；用於禮貌地引起注意。常用於向陌生人搭話或打擾別人時。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:"Hi, Yash. What is it?",                                 zh:"嗨，Yash。有什麼事嗎？",                    keys:["What is it"],              note:"What is it? = 有什麼事嗎？日常打招呼後詢問對方的問法。"},
+  {speaker:"Yash",    sp:"yash",   en:"Can I please take ten days off from school?",          zh:"我可以請十天假嗎？",                        keys:["take","off"],              note:"take...off = 請假（從學校/工作）。Can I please...? = 禮貌請求句型。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:"Ten days?",                                              zh:"十天？",                                    keys:[],                         note:"表示驚訝，用疑問語調重複對方說的數字。"},
+  {speaker:"Yash",    sp:"yash",   en:"Yes. From the second to the third week of March.",     zh:"是的，從三月第二週到第三週。",              keys:["second","third","March"],  note:"second（2nd）= 第二的；third（3rd）= 第三的。序數形容詞修飾 week。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:"Is everything okay?",                                   zh:"一切都還好嗎？",                            keys:[],                         note:"Is everything okay? = 關心問句，詢問對方是否一切正常。"},
+  {speaker:"Yash",    sp:"yash",   en:"Yes, all is well. I'm just going back to India for Holi.",zh:"是的，一切都好。我只是要回印度慶祝 Holi 節。",keys:["all is well"],         note:"all is well = 一切都好（慣用語）。I'm going back = 現在進行式表未來計畫。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:"For what? For a holiday?",                               zh:"為了什麼？為了放假嗎？",                   keys:["holiday"],                note:"holiday = 假期；節日。For what? = 問目的，語氣帶點不解。"},
+  {type:"scene",text:"（Yash 拿出手機，向 Ms. Wang 說明 Holi 節的由來。）"},
+  {speaker:"Yash",    sp:"yash",   en:"Holi is the Indian New Year. Everyone plays in the street with colorful powders. We also call it the festival of colors.",zh:"Holi 是印度新年。大家在街上玩五彩粉末。我們也稱它為「色彩節」。",keys:["street","colorful","festival","call"],note:"call it the festival of colors = 稱它為色彩節（call A B = 稱 A 為 B）。colorful powders = 五彩粉末。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:"Oh, I get it. So, when is Holi?",                       zh:"喔，我懂了。那麼，Holi 是什麼時候呢？",   keys:["I get it","when"],         note:"I get it. = 我懂了（慣用語）。when = 何時（副詞），引導疑問句。"},
+  {speaker:"Yash",    sp:"yash",   en:"It's around the full moon in March.",                  zh:"它在三月的滿月前後。",                      keys:["full"],                    note:"full moon = 滿月。around the full moon = 在滿月前後。full（adj.）= 完整的。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:"What's the date today then?",                           zh:"那麼今天幾號呢？",                          keys:["date"],                    note:"What's the date today? = 今天幾號？詢問日期的標準句型，回答不加 on。"},
+  {speaker:"Yash",    sp:"yash",   en:"It's March 2.",                                        zh:"今天是三月二日。",                          keys:[],                         note:"It's + 月份 + 日期 = 回答今天的日期。What's the date? → It's March 2."},
+  {speaker:"Ms. Wang",sp:"mswang",en:"Wow! Holi is just around the corner.",                  zh:"哇！Holi 快到了！",                        keys:[],                         note:"just around the corner = （時間上）快到了；近在眼前（慣用語）。"},
+  {speaker:"Yash",    sp:"yash",   en:"Yes. It's on March 9.",                                zh:"是的，在三月九號。",                        keys:[],                         note:"It's on March 9. = 在三月九日。When is...? → It's on + 月份 + 序數。"},
+  {speaker:"Ms. Wang",sp:"mswang",en:'No problem, Yash. Enjoy your "Holi-day."',              zh:'沒問題，Yash。好好享受你的「Holi 假期」！',keys:[],                         note:'「Holi-day」是 holiday 的雙關語，Holi 嵌入 holiday 裡面。幽默收尾！'},
+  {speaker:"Yash",    sp:"yash",   en:"Thank you, Ms. Wang.",                                 zh:"謝謝您，王老師。",                          keys:[],                         note:"禮貌的道謝，正式場合的標準用法。"},
+];
+
 // ══════════════════════════════════════════════════
 //  L4 DATA
 // ══════════════════════════════════════════════════
 const L4W=[
+  // Dialogue 組
   {id:1,en:"make",pos:"v.",zh:"製作",ex:"Jessica is making a cake for her son.",chunks:["make paper","make a cake","make a choice","make a plan"],syl:"make",hint:"m__e"},
   {id:2,en:"paper",pos:"n.",zh:"紙",ex:"The students draw a cat on paper in art class.",chunks:["poop paper","toilet paper","a piece of paper","paper bag"],syl:"pa-per",hint:"pa___"},
   {id:3,en:"which",pos:"pron.",zh:"哪一個",ex:"Sam: Which do you like, apples or oranges? Alex: I like apples.",chunks:["Which one do you like?","Which do you prefer?","Which is better?","which one"],syl:"which",hint:"wh__h"},
@@ -434,6 +618,7 @@ const L4W=[
   {id:16,en:"poop",pos:"n.",zh:"糞便",ex:"Please collect poop in the bucket.",chunks:["elephant poop","poop paper","collect poop","poop gas"],syl:"poop",hint:"p__p"},
   {id:17,en:"bucket",pos:"n.",zh:"桶",ex:"I need 4 buckets of water.",chunks:["a bucket of water","half a bucket","kick the bucket","bucket list"],syl:"buck-et",hint:"buck__"},
   {id:18,en:"get",pos:"v.",zh:"拿取；獲得",ex:"First, get a bucket and collect some poop.",chunks:["get a bucket","get ready","get up","get to know"],syl:"get",hint:"g__"},
+  // Word Power 食物
   {id:19,en:"pumpkin pie",pos:"n.",zh:"南瓜派",ex:"Mom is making a pumpkin pie. I can't wait.",chunks:["make a pumpkin pie","pumpkin pie season","pumpkin pie spice","love pumpkin pie"],syl:"pump-kin pie",hint:"pump___ pie"},
   {id:20,en:"fried chicken",pos:"n.",zh:"炸雞",ex:"Let's have fried chicken for dinner.",chunks:["fried chicken","have fried chicken","fried chicken wings","love fried chicken"],syl:"fried chick-en",hint:"fried ch_____"},
   {id:21,en:"coffee",pos:"n.",zh:"咖啡",ex:"Have a cup of coffee and take a break.",chunks:["a cup of coffee","drink coffee","too much coffee","coffee shop"],syl:"cof-fee",hint:"cof___"},
@@ -443,6 +628,7 @@ const L4W=[
   {id:25,en:"dozen",pos:"n.",zh:"十二個；一打",ex:"I would like two dozen eggs, please.",chunks:["a dozen eggs","two dozen","half a dozen","by the dozen"],syl:"doz-en",hint:"doz__"},
   {id:26,en:"bread",pos:"n.",zh:"麵包",ex:"Emily's lunch today is a slice of bread and a cup of tea.",chunks:["a loaf of bread","a slice of bread","eat bread","fresh bread"],syl:"bread",hint:"br__d"},
   {id:27,en:"slice",pos:"n.",zh:"片",ex:"Would you like a slice of bread?",chunks:["a slice of bread","a slice of pizza","slice by slice","two slices of"],syl:"slice",hint:"sl__e"},
+  // Reading 組
   {id:28,en:"useful",pos:"adj.",zh:"有用的",ex:"English is useful. You can make friends from different countries.",chunks:["very useful","be useful","useful information","useful tool"],syl:"use-ful",hint:"use___"},
   {id:29,en:"mean",pos:"v.",zh:"意思是；有意義",ex:"What does the teacher mean?",chunks:["what does it mean?","mean poop","mean by that","I mean"],syl:"mean",hint:"m__n"},
   {id:30,en:"power",pos:"n.",zh:"動力",ex:"The car runs on green power.",chunks:["get power from","green power","solar power","power source"],syl:"pow-er",hint:"pow__"},
@@ -485,83 +671,835 @@ const L4READ={
   blanks:[
     {num:1,opts:["useful","useless","stinky","large"],ans:0,exp:"課文開頭說「但有些大便是有用的」→ useful（有用的）。段落主題是「廢物也能有用途」。"},
     {num:2,opts:["kind","piece","slice","bucket"],ans:0,exp:"「a kind of」= 一種……，這裡說「一種特別的公車」→ kind（種類）是固定用法。\n💡 a kind of = a type of"},
-    {num:3,opts:["In other words","For example","However","In addition"],ans:0,exp:"這句是對前句（行駛300公里）的具體解釋（從台北到台南）→ In other words（換句話說）。"},
+    {num:3,opts:["In other words","For example","However","In addition"],ans:0,exp:"這句是對前句（行駛300公里）的具體解釋（從台北到台南）→ In other words（換句話說）。",},
     {num:4,opts:["stinky","useful","large","kind"],ans:0,exp:"前有 not，表示否定 → not stinky at all = 一點都不臭。Believe it or not 提示這是出人意料的事！"}
   ],
   cap:"Reading「Let's Go Number Two」的說明文結構與 112 年會考說明文閱讀相同。How much/many 和不可數名詞是 113 年會考必考語法考點！"
 };
 
+// ── L4 DIALOGUE ──
+const L4DIAL=[
+  {type:"scene",text:"（Joe 和 May 在大象便便紙園區。導遊 Lisa 正在歡迎他們。Joe and May are at the Elephant POOPOOPAPER Park. Lisa, a tour guide, is welcoming them.）"},
+  {speaker:"Lisa", sp:"lisa",  en:"Welcome to the Elephant POOPOOPAPER Park! You can feed elephants or make poop paper. Which one do you like?",zh:"歡迎來到大象便便紙園區！你可以餵大象或製作便便紙。你喜歡哪一個？",keys:["make","which"],     note:"Which one do you like? = 有限選項中選一個（餵象 or 做紙），用 Which 不用 What。make poop paper = 製作便便紙。"},
+  {speaker:"May",  sp:"may",   en:"Let's make poop paper.",                          zh:"我們來做便便紙吧。",               keys:[],                note:"Let's + 動詞原形 = 提議一起做某事（非常常用的句型）。"},
+  {speaker:"Lisa", sp:"lisa",  en:"Good choice.",                                     zh:"好選擇。",                        keys:["choice"],        note:"Good choice! = 好選擇！常用的口頭讚美語。choice（n.）= 選擇。"},
+  {type:"scene",text:"（They walk to poop paper area. 他們走到便便紙製作區。）"},
+  {speaker:"Lisa", sp:"lisa",  en:"Everybody, get a bucket and collect some poop.",  zh:"大家，去拿一個桶子並收集一些大便。",keys:["bucket","collect"],note:"祈使句：省略主詞 you，直接用動詞原形。get（拿取）和 collect（收集）兩個動作用 and 連接。"},
+  {speaker:"Joe",  sp:"joe",   en:"How much poop do we need?",                       zh:"我們需要多少大便？",               keys:["much","need"],   note:"poop = 不可數名詞（無法數個數）→ 用 How much。可數名詞才用 How many！"},
+  {speaker:"Lisa", sp:"lisa",  en:"We need half a bucket.",                          zh:"我們需要半桶。",                   keys:["half"],          note:"half（n.）= 一半。half a bucket = 半桶。注意：half a + 單數名詞。"},
+  {speaker:"May",  sp:"may",   en:"How many pieces of paper can that make?",         zh:"這能做出幾張紙？",                 keys:["pieces"],        note:"pieces = 可數名詞（1 piece, 2 pieces）→ 用 How many。a piece of paper = 一張紙。"},
+  {speaker:"Lisa", sp:"lisa",  en:"About 20 pieces of paper.",                       zh:"大約二十張紙。",                   keys:[],                note:"About = 大約。20 pieces of paper = 二十張紙。piece 是量詞。"},
+  {speaker:"May",  sp:"may",   en:"Cool. What do we do next?",                      zh:"太酷了。接下來我們做什麼？",       keys:[],                note:"What do we do next? = 接下來做什麼？詢問下一步驟的常用問法。"},
+  {speaker:"Lisa", sp:"lisa",  en:"We clean the poop and boil it.",                 zh:"我們清洗大便然後把它煮沸。",       keys:["boil"],          note:"boil（v.）= 煮沸。clean and boil = 兩個動詞描述步驟，用 and 連接。"},
+  {speaker:"Joe",  sp:"joe",   en:"After that?",                                     zh:"之後呢？",                        keys:["After"],         note:"After that? = 之後呢？省略句，用於追問下一個步驟。after（prep.）= 在……之後。"},
+  {speaker:"Lisa", sp:"lisa",  en:"We put it on a screen and dry it in the sun.",   zh:"我們把它放在篩子上，在太陽下曬乾。",keys:["screen"],       note:"screen（n.）= 篩子（此處）。put...on a screen = 放在篩子上；dry in the sun = 在太陽下曬乾。"},
+  {speaker:"May",  sp:"may",   en:"That's all.",                                     zh:"就這些了嗎。",                    keys:[],                note:"That's all. = 就這樣了。表示結束或確認列舉完畢的常用說法。"},
+  {speaker:"May",  sp:"may",   en:"That's a lot of work.",                          zh:"這工作量很多呢。",                 keys:["work"],          note:"That's a lot of work. = 工作量很多。a lot of = 很多（可用於可數和不可數名詞）。"},
+  {speaker:"Lisa", sp:"lisa",  en:"Come on! It's easy.",                            zh:"來吧！很容易的。",                 keys:[],                note:"Come on! = 加油！別這樣！用於鼓勵或催促對方的感嘆語。"},
+  {speaker:"Joe",  sp:"joe",   en:"Okay. Let's get our hands dirty!",               zh:"好吧，讓我們動手吧！",             keys:[],                note:"Let's get our hands dirty! = 課本慣用語（Idioms and Expressions），意思是讓我們開始動手吧！"},
+];
+
+// ══════════════════════════════════════════════════
+//  TEXTBOOK NUMBER ASSIGNMENTS
+//  L3: 全部 1–39 有編號
+//  L4: 1–17 有編號, get=無編號, 18–37 有編號, kind=無編號
+// ══════════════════════════════════════════════════
 L3W.forEach((w,i)=>{ w.num=String(i+1); });
 L4W.slice(0,17).forEach((w,i)=>{ w.num=String(i+1); });
-L4W[17].num=null;
-L4W.slice(18,27).forEach((w,i)=>{ w.num=String(18+i); });
-L4W.slice(27,38).forEach((w,i)=>{ w.num=String(27+i); });
-L4W[38].num=null;
+L4W[17].num=null;                                   // get — 課本無編號
+L4W.slice(18,27).forEach((w,i)=>{ w.num=String(18+i); });  // pumpkin pie=18 … slice=26
+L4W.slice(27,38).forEach((w,i)=>{ w.num=String(27+i); });  // useful=27 … stinky=37
+L4W[38].num=null;                                   // kind — 課本無編號
 
+// ── L3 READING PARAGRAPHS ──
+const L3RDG=[
+  {
+    title:"段落一：全球新年的不同慶祝方式",
+    en:"The world celebrates the start of a new year in different ways. In India, for example, people throw colorful powders at each other. How do other countries celebrate it?",
+    zh:"全世界以不同的方式慶祝新年的開始。例如，在印度，人們互相投擲五彩粉末。其他國家是怎麼慶祝的呢？",
+    keys:["celebrates","for example","each other"],
+    notes:[
+      "celebrates（v.）= 慶祝；主詞 The world = 第三人稱單數，現在簡單式加 s → celebrates。",
+      "for example（phr.）= 例如，引出具體舉例說明，是常見的轉折詞。",
+      "each other（pron.）= 彼此；互相。throw...at each other = 互相投擲……",
+      "How do other countries celebrate it? = 疑問句引出下文，it 指 the start of a new year。"
+    ],
+    fill:{blank:"The world _____ the start of a new year in different ways.",answer:"celebrates",hint:"主詞 The world（第三人稱單數）+ 描述習慣 → 現在簡單式加 s → celebrates。"}
+  },
+  {
+    title:"段落二：羅馬尼亞的熊舞慶典",
+    en:"In Romania, people wear large bear costumes and dance for good luck on December 31st and January 1st. The dancing bears knock on doors, visit people's houses, and wish everyone a happy New Year.",
+    zh:"在羅馬尼亞，人們在 12 月 31 日和 1 月 1 日穿著大型熊裝跳舞祈求好運。跳舞的熊會敲門、拜訪人家，並祝福大家新年快樂。",
+    keys:["large","costumes","luck","knock","wish"],
+    notes:[
+      "wear large bear costumes = 穿大型熊裝。large（adj.）= 大的，修飾 bear costumes。",
+      "dance for good luck = 跳舞祈求好運。for 表目的：for + 名詞 = 為了……",
+      "knock on doors / visit people's houses / wish everyone = 三個動詞並列，主詞 The dancing bears（複數），動詞不加 s。",
+      "wish（v.）= 祝；wish + 人 + 事物 = 祝某人……例：wish you a happy new year。"
+    ],
+    fill:{blank:"In Romania, people wear large bear _____ and dance for good luck.",answer:"costumes",hint:"wear + 複數名詞，前有 large 修飾 → costumes（化裝服）。"}
+  },
+  {
+    title:"段落三：泰國 Songkran 水節",
+    en:"In Thailand, people call their New Year's Day Songkran. It's on April 13th. Songkran is a water festival. People have big water fights. For them, water can wash away bad luck.",
+    zh:"在泰國，人們稱他們的新年為 Songkran。日期是 4 月 13 日。Songkran 是水節，人們進行激烈的水仗。對他們而言，水能洗去厄運。",
+    keys:["call","wash"],
+    notes:[
+      "call their New Year's Day Songkran = 稱他們的新年為 Songkran。call A B = 稱 A 為 B（S + call + O + C 句型）。",
+      "It's on April 13th. = 在四月十三日。When is...? → It's on + 月份 + 序數。",
+      "wash away（phr.v.）= 沖走；洗去。water can wash away bad luck = 水能洗去厄運。",
+      "can + 動詞原形：can 是情態動詞，後接動詞原形 wash（不加 s 或 es）。"
+    ],
+    fill:{blank:"For them, water can _____ away bad luck.",answer:"wash",hint:"wash away = 沖走、洗去（片語動詞）。can 後接動詞原形 → wash（不加 s）。"}
+  },
+  {
+    title:"段落四：結論——各地新年的共同點",
+    en:"New Year celebrations are different from country to country, but they have two things in common. They mark a new start and bring joy for all.",
+    zh:"各國的新年慶典各有不同，但它們有兩個共同點：標示著新的開始，並為所有人帶來歡樂。",
+    keys:["in common","mark"],
+    notes:[
+      "different from country to country = 因國家而異。different from = 和……不同。",
+      "but（對等連接詞）= 但是，引出轉折，前說「不同」後說「共同」。",
+      "in common（phr.）= 共同的；have things in common = 有共同點（固定片語）。",
+      "mark（v.）= 標示；表示。mark a new start = 標示新的開始。They 指所有新年慶典。"
+    ],
+    fill:{blank:"New Year celebrations have two things _____ country to country.",answer:"in common",hint:"have things in common = 有共同之處（固定片語）。"}
+  }
+];
+
+// ── L4 READING PARAGRAPHS ──
+const L4RDG=[
+  {
+    title:"段落一：引言——大便也有用途",
+    en:"People don't like poop, but some poop is useful. For example, we can make paper with elephant poop. Then, what can we do with human poop?",
+    zh:"人們不喜歡大便，但有些大便是有用的。例如，我們可以用大象的糞便製紙。那麼，我們能用人類的糞便做什麼呢？",
+    keys:["useful","for example"],
+    notes:[
+      "but（轉折連接詞）= 但是，連接對比的兩個概念：不喜歡 vs. 有用。",
+      "useful（adj.）= 有用的。be + 形容詞：is useful = 是有用的（述語形容詞）。",
+      "For example = 例如，引出具體說明。和 for instance 意思相同。",
+      "what can we do with...? = 我們能用……做什麼？引出下一段主題（human poop）。"
+    ],
+    fill:{blank:"People don't like poop, but some poop is _____.",answer:"useful",hint:"課文說「但有些大便是有用的」→ useful（有用的）。be 動詞後用形容詞。"}
+  },
+  {
+    title:"段落二：英國生物燃料公車 Bio-Bus",
+    en:'A special kind of bus runs in England. People call it the "Bio-Bus," or the "Number Two Bus." "Number Two" can mean poop in English. The bus gets power from garbage and human waste. It can run about three hundred kilometers.',
+    zh:'一種特別的公車在英國行駛。人們稱它為「生物公車」或「二號公車」。英文中「二號」可以指大便。這輛公車從垃圾和人類廢棄物獲得動力，可以行駛約三百公里。',
+    keys:["kind","mean","power","garbage"],
+    notes:[
+      "a kind of = 一種（量詞片語）。kind（n.）= 種類。a special kind of bus = 一種特別的公車。",
+      'call it the "Bio-Bus" = 稱它為生物公車。call A B = 稱 A 為 B（重要句型）。',
+      "mean（v.）= 意思是。\"Number Two\" can mean poop = 「二號」可以指大便。",
+      "gets power from = 從……獲得動力。get power from garbage and human waste = 從垃圾和人類廢棄物獲得動力。"
+    ],
+    fill:{blank:'A special _____ of bus runs in England.',answer:"kind",hint:"「a kind of」= 一種……（固定量詞片語），kind（n.）= 種類。"}
+  },
+  {
+    title:"段落三：In other words 換句話說",
+    en:"In other words, the bus can go from Taipei to Tainan with a tank of gas from human waste.",
+    zh:"換句話說，這輛公車用一槽來自人類廢棄物的氣體燃料，就能從台北開到台南。",
+    keys:["In other words","tank","gas"],
+    notes:[
+      "In other words（phr.）= 換句話說，重新解釋前句（行駛 300 公里 → 從台北到台南），讓讀者更容易理解。",
+      "a tank of gas = 一槽氣體燃料。tank（n.）= 槽。gas（n.）= 氣體燃料；汽油。",
+      "from Taipei to Tainan = 從台北到台南（約 300 公里），這是具體化數字的說明方式。",
+      "from human waste = 來自人類廢棄物。介系詞 from 表示來源。"
+    ],
+    fill:{blank:"_____, the bus can go from Taipei to Tainan with a tank of gas.",answer:"In other words",hint:"In other words = 換句話說，重新解釋前句（行駛300公里）的具體說明。"}
+  },
+  {
+    title:"段落四：結論——Bio-Bus 對地球友善",
+    en:'Bio-Buses are good for the Earth. Believe it or not, these buses are not stinky at all. Let\'s all go "Number Two."',
+    zh:'生物燃料公車對地球有益。信不信由你，這些公車一點都不臭。讓我們大家都來「二號」吧！',
+    keys:["Believe","stinky"],
+    notes:[
+      "be good for = 對……有益。Bio-Buses are good for the Earth = 生物燃料公車對地球有益。",
+      "Believe it or not（慣用語）= 信不信由你，用於引出出人意料的事實。",
+      "not...at all = 一點也不……（加強否定）。not stinky at all = 一點都不臭。stinky（adj.）= 臭的。",
+      "Let's go \"Number Two.\" = 雙關語（字面：讓我們大家去二號；隱含：支持 Bio-Bus 減少污染）。"
+    ],
+    fill:{blank:"Believe it or not, these buses are not _____ at all.",answer:"stinky",hint:"not...at all = 一點也不。前有 not → not stinky at all = 一點都不臭。stinky = 臭的（adj.）。"}
+  }
+];
+
+// ══════════════════════════════════════════════════
+//  CHUNK CHINESE TRANSLATIONS
+// ══════════════════════════════════════════════════
+const CHUNK_ZH={
+  // ── L3 excuse me ──
+  "Excuse me, can I ask you something?":"打擾一下，我可以問個問題嗎？",
+  "Excuse me, where is the bathroom?":"打擾一下，洗手間在哪裡？",
+  "Excuse me! I need to get past.":"借過！我需要通過。",
+  // ── second ──
+  "the second time":"第二次",
+  "second place":"第二名",
+  "a second chance":"第二次機會",
+  "the second floor":"二樓",
+  // ── third ──
+  "third place":"第三名",
+  "the third floor":"三樓",
+  "a third time":"第三次",
+  "the third week":"第三週",
+  // ── March ──
+  "in March":"在三月",
+  "on March 9":"在三月九日",
+  "early March":"三月初",
+  "March break":"三月假期",
+  // ── holiday ──
+  "on holiday":"在度假中",
+  "a public holiday":"國定假日",
+  "holiday plans":"假期計畫",
+  "school holiday":"學校放假",
+  // ── street ──
+  "on the street":"在街上",
+  "across the street":"在街道對面",
+  "street food":"街頭小吃",
+  "down the street":"沿著街道走",
+  // ── festival ──
+  "a music festival":"音樂節",
+  "the Moon Festival":"中秋節",
+  "festival of colors":"色彩節",
+  "attend a festival":"參加節慶",
+  // ── when ──
+  "When is...?":"……是什麼時候？",
+  "when I was young":"當我還小的時候",
+  "when you are ready":"當你準備好的時候",
+  "Ask when it starts.":"問問什麼時候開始。",
+  // ── full ──
+  "full name":"全名；完整姓名",
+  "full moon":"滿月",
+  "full time":"全職；全時",
+  "a full meal":"一頓完整的餐",
+  // ── date ──
+  "What's the date?":"今天幾號？",
+  "the date today":"今天的日期",
+  "a due date":"截止日期",
+  "set a date":"訂定日期",
+  // ── colorful ──
+  "colorful clothes":"繽紛的衣服",
+  "colorful powders":"五彩粉末",
+  "a colorful life":"多采多姿的生活",
+  "colorful fireworks":"繽紛的煙火",
+  // ── powder ──
+  "colorful powder":"彩色粉末",
+  "throw powder":"投擲粉末",
+  "baby powder":"嬰兒爽身粉",
+  "powder blue":"粉藍色",
+  // ── month ──
+  "this month":"這個月",
+  "next month":"下個月",
+  "last month":"上個月",
+  "every month":"每個月",
+  // ── January ──
+  "in January":"在一月",
+  "on January 1st":"在一月一日",
+  "early January":"一月初",
+  "mid-January":"一月中旬",
+  // ── February ──
+  "in February":"在二月",
+  "on February 14":"在二月十四日",
+  "Valentine's Day in February":"二月的情人節",
+  "late February":"二月底",
+  // ── April ──
+  "in April":"在四月",
+  "on April 13":"在四月十三日",
+  "April Fools' Day":"四月愚人節",
+  "April break":"四月假期",
+  // ── May ──
+  "in May":"在五月",
+  "Mother's Day in May":"五月的母親節",
+  "on May 1":"在五月一日",
+  "late May":"五月底",
+  // ── June ──
+  "in June":"在六月",
+  "Dragon Boat Festival in June":"六月的端午節",
+  "on June 5":"在六月五日",
+  "early June":"六月初",
+  // ── July ──
+  "in July":"在七月",
+  "on July 4":"在七月四日",
+  "hot in July":"七月很熱",
+  "mid-July":"七月中旬",
+  // ── August ──
+  "in August":"在八月",
+  "on August 8":"在八月八日",
+  "summer in August":"八月的夏天",
+  "late August":"八月底",
+  // ── September ──
+  "in September":"在九月",
+  "Teacher's Day in September":"九月的教師節",
+  "on September 28":"在九月二十八日",
+  "early September":"九月初",
+  // ── October ──
+  "in October":"在十月",
+  "Halloween in October":"十月的萬聖節",
+  "on October 10":"在十月十日",
+  "late October":"十月底",
+  // ── November ──
+  "in November":"在十一月",
+  "on November 11":"在十一月十一日",
+  "late November":"十一月底",
+  "early November":"十一月初",
+  // ── December ──
+  "in December":"在十二月",
+  "on December 25":"在十二月二十五日",
+  "Christmas in December":"十二月的聖誕節",
+  "December 31":"十二月三十一日",
+  // ── celebrate ──
+  "celebrate a holiday":"慶祝節日",
+  "celebrate New Year":"慶祝新年",
+  "celebrate with friends":"和朋友一起慶祝",
+  "celebrating together":"一起慶祝",
+  // ── for example ──
+  "For example, ...":"舉例來說……",
+  "for example, in Japan":"例如，在日本",
+  "for example, people eat...":"例如，人們吃……",
+  "give an example":"舉一個例子",
+  // ── each other ──
+  "look at each other":"互相看著對方",
+  "help each other":"互相幫助",
+  "talk to each other":"互相交談",
+  "know each other well":"彼此非常了解",
+  // ── large ──
+  "a large group":"一大群人",
+  "large bear costumes":"大型熊裝",
+  "a large city":"一座大城市",
+  "a large amount":"大量的",
+  // ── first ──
+  "first place":"第一名",
+  "the first time":"第一次",
+  "January 1st":"一月一日",
+  "first of all":"首先；第一點",
+  // ── knock ──
+  "knock on the door":"敲門",
+  "knock on doors":"逐門敲門",
+  "knock and wait":"敲門後等待",
+  "knock knock!":"敲敲敲！（遊戲開場白）",
+  // ── wish ──
+  "wish someone luck":"祝某人好運",
+  "make a wish":"許願",
+  "wish you well":"祝你一切安好",
+  "best wishes":"誠摯的祝福",
+  // ── wash ──
+  "wash your hands":"洗手",
+  "wash away bad luck":"洗去壞運氣",
+  "wash clothes":"洗衣服",
+  "wash the dishes":"洗碗盤",
+  // ── thing ──
+  "many things":"很多事情",
+  "the same thing":"同樣的事情",
+  "things in common":"共同的事情",
+  "a good thing":"一件好事",
+  // ── in common ──
+  "have things in common":"有共同之處",
+  "two things in common":"兩個共同點",
+  "what we have in common":"我們的共同點",
+  "share in common":"共同分享",
+  // ── mark ──
+  "mark a new start":"標示新的開始",
+  "mark the date":"標記日期",
+  "mark an event":"標示一個活動",
+  "leave a mark":"留下印記",
+  // ── start ──
+  "a new start":"新的開始",
+  "the start of":"……的開始",
+  "at the start":"在一開始",
+  "from the start":"從一開始",
+  // ── costume ──
+  "wear a costume":"穿戴服裝",
+  "bear costumes":"熊形裝扮",
+  "a Halloween costume":"萬聖節服裝",
+  "dress in costume":"穿戴角色服裝",
+  // ── luck ──
+  "good luck":"祝好運",
+  "bad luck":"壞運氣",
+  "wish someone luck":"祝某人好運",
+  "for good luck":"為了好運",
+  // ── celebration ──
+  "a big celebration":"一場盛大的慶典",
+  "New Year celebration":"新年慶典",
+  "birthday celebration":"生日慶祝",
+  "join the celebration":"加入慶祝活動",
+
+  // ══ L4 ══
+  // ── make ──
+  "make paper":"做紙",
+  "make a cake":"烤一個蛋糕",
+  "make a choice":"做出選擇",
+  "make a plan":"訂計畫",
+  // ── paper ──
+  "poop paper":"便便紙",
+  "toilet paper":"廁所衛生紙",
+  "a piece of paper":"一張紙",
+  "paper bag":"紙袋",
+  // ── which ──
+  "Which one do you like?":"你喜歡哪一個？",
+  "Which do you prefer?":"你比較喜歡哪個？",
+  "Which is better?":"哪個比較好？",
+  "which one":"哪一個",
+  // ── choice ──
+  "Good choice!":"好選擇！",
+  "make a choice":"做出選擇",
+  "have no choice":"別無選擇",
+  "a great choice":"很棒的選擇",
+  // ── walk ──
+  "walk to school":"走路上學",
+  "take a walk":"去散步",
+  "walk away":"走開",
+  "walk in the park":"在公園散步",
+  // ── collect ──
+  "collect poop":"收集大便",
+  "collect stamps":"收集郵票",
+  "collect data":"收集資料",
+  "collect money":"收款；募款",
+  // ── much ──
+  "too much":"太多了",
+  "how much":"多少（不可數）",
+  "very much":"非常地",
+  "so much":"這麼多",
+  // ── need ──
+  "we need":"我們需要",
+  "how much do you need?":"你需要多少？",
+  "I need help":"我需要幫助",
+  "need to do":"需要做……",
+  // ── half ──
+  "half a bucket":"半桶",
+  "half time":"中場；半場",
+  "half an hour":"半小時",
+  "half of":"……的一半",
+  // ── piece ──
+  "a piece of paper":"一張紙",
+  "pieces of paper":"幾張紙",
+  "a piece of cake":"一片蛋糕；輕鬆的事",
+  "pieces of":"幾……（量詞片語）",
+  // ── boil ──
+  "boil water":"燒水；煮沸水",
+  "boil it":"把它煮沸",
+  "boil eggs":"煮雞蛋",
+  "bring to a boil":"煮到沸騰",
+  // ── after ──
+  "after school":"放學後",
+  "after that":"之後；接著",
+  "after lunch":"午餐後",
+  "after class":"下課後",
+  // ── screen ──
+  "put it on a screen":"把它放在篩子上",
+  "touch screen":"觸控螢幕",
+  "big screen":"大螢幕",
+  "screen time":"螢幕使用時間",
+  // ── work ──
+  "a lot of work":"很多工作；大量工作",
+  "hard work":"努力工作；辛苦",
+  "go to work":"去上班",
+  "good work":"做得好",
+  // ── tour guide ──
+  "tour guide":"導遊",
+  "follow the tour guide":"跟著導遊",
+  "be a tour guide":"當導遊",
+  "tour guide service":"導覽服務",
+  // ── poop ──
+  "elephant poop":"大象糞便",
+  "poop paper":"便便紙",
+  "collect poop":"收集糞便",
+  "poop gas":"糞便氣體",
+  // ── bucket ──
+  "a bucket of water":"一桶水",
+  "half a bucket":"半桶",
+  "kick the bucket":"（俚語）蹬腿；死亡",
+  "bucket list":"人生願望清單",
+  // ── get ──
+  "get ready":"準備好",
+  "get up":"起床；起立",
+  "get to know":"認識；了解",
+  "get a bucket":"去拿桶子",
+  // ── pumpkin pie ──
+  "make a pumpkin pie":"做一個南瓜派",
+  "pumpkin pie season":"南瓜派的季節",
+  "pumpkin pie spice":"南瓜派香料",
+  "love pumpkin pie":"喜愛南瓜派",
+  // ── fried chicken ──
+  "fried chicken":"炸雞",
+  "have fried chicken":"吃炸雞",
+  "fried chicken wings":"炸雞翅",
+  "love fried chicken":"喜愛炸雞",
+  // ── coffee ──
+  "a cup of coffee":"一杯咖啡",
+  "drink coffee":"喝咖啡",
+  "too much coffee":"咖啡喝太多",
+  "coffee shop":"咖啡廳",
+  // ── juice ──
+  "a glass of juice":"一杯果汁",
+  "orange juice":"柳橙汁",
+  "fruit juice":"水果汁",
+  "fresh juice":"新鮮果汁",
+  // ── rice ──
+  "a bowl of rice":"一碗米飯",
+  "eat rice":"吃米飯",
+  "fried rice":"炒飯",
+  "rice paper":"米紙；宣紙",
+  // ── pork ──
+  "pork dishes":"豬肉料理",
+  "roast pork":"烤豬肉",
+  "pork chop":"豬排",
+  "eat pork":"吃豬肉",
+  // ── dozen ──
+  "a dozen eggs":"一打雞蛋（12顆）",
+  "two dozen":"兩打（24個）",
+  "half a dozen":"半打（6個）",
+  "by the dozen":"以打為單位",
+  // ── bread ──
+  "a loaf of bread":"一條麵包",
+  "a slice of bread":"一片麵包",
+  "eat bread":"吃麵包",
+  "fresh bread":"新鮮麵包",
+  // ── slice ──
+  "a slice of bread":"一片麵包",
+  "a slice of pizza":"一片披薩",
+  "slice by slice":"一片一片地",
+  "two slices of":"兩片……",
+  // ── useful ──
+  "very useful":"非常有用",
+  "be useful":"是有用的",
+  "useful information":"有用的資訊",
+  "useful tool":"實用的工具",
+  // ── mean ──
+  "what does it mean?":"這是什麼意思？",
+  "mean by that":"那樣說是什麼意思",
+  "mean poop":"指的是大便",
+  "I mean":"我的意思是",
+  "in other words":"換句話說",
+  // ── power ──
+  "get power from":"從……獲得動力",
+  "green power":"綠色能源",
+  "solar power":"太陽能",
+  "power source":"能量來源",
+  // ── garbage ──
+  "take out the garbage":"把垃圾拿出去",
+  "garbage truck":"垃圾車",
+  "garbage collector":"垃圾收集員",
+  "garbage can":"垃圾桶",
+  // ── in other words ──
+  "In other words, ...":"換句話說……",
+  "in other words, this means":"換句話說，這意味著",
+  "that is to say":"也就是說",
+  "to put it simply":"簡單來說",
+  // ── gas ──
+  "a tank of gas":"一槽氣體燃料",
+  "run out of gas":"燃料耗盡",
+  "natural gas":"天然氣",
+  "gas station":"加油站",
+  // ── believe ──
+  "believe it or not":"信不信由你",
+  "I believe":"我相信",
+  "can you believe?":"你能相信嗎？",
+  "hard to believe":"難以置信",
+  // ── human ──
+  "human waste":"人類廢棄物",
+  "human body":"人體",
+  "human being":"人類",
+  "human nature":"人性",
+  // ── kilometer ──
+  "300 kilometers":"三百公里",
+  "run 5 kilometers":"跑五公里",
+  "kilometers away":"公里外",
+  "per kilometer":"每公里",
+  // ── tank ──
+  "a tank of gas":"一槽氣體燃料",
+  "fish tank":"魚缸",
+  "fuel tank":"油箱",
+  "water tank":"水槽；水塔",
+  // ── stinky ──
+  "not stinky at all":"一點都不臭",
+  "stinky tofu":"臭豆腐",
+  "stinky smell":"臭味",
+  "very stinky":"非常臭",
+  // ── kind ──
+  "a kind of":"一種……",
+  "what kind of":"什麼種類的",
+  "this kind of":"這種……",
+  "a special kind":"一種特別的",
+};
+
+// ══════════════════════════════════════════════════
+//  LESSONS REGISTRY
+// ══════════════════════════════════════════════════
 const LESSONS={
   L3:{
     key:'L3',label:'第三課',
     words:L3W,
     groups:{0:L3W,1:L3W.slice(0,12),2:L3W.slice(12,24),3:L3W.slice(24)},
-    groupLabels:['全部 (39)','Dialogue (12)','月份 (12)','Reading (15)'],
-    sents:L3SENTS,grams:L3GRAMS,read:L3READ,
-    gramTitle:'⚙️ 文法挑戰：序數與日期'
+    groupLabels:['全部 (39)','Dialogue 1-12','月份 13-24','Reading 25-39'],
+    numGroups:[
+      {label:'全部 (39)',words:L3W},
+      {label:'1–10',words:L3W.slice(0,10)},
+      {label:'11–20',words:L3W.slice(10,20)},
+      {label:'21–30',words:L3W.slice(20,30)},
+      {label:'31–39',words:L3W.slice(30,39)},
+      {label:'1–20',words:L3W.slice(0,20)},
+      {label:'1–30',words:L3W.slice(0,30)},
+    ],
+    sents:L3SENTS,grams:L3GRAMS,read:L3READ,dial:L3DIAL,rdg:L3RDG,
+    gramTitle:'⚙️ 文法挑戰：序數與日期',
+    dialTitle:'🗣️ Dialogue：Yash 向老師請假去慶祝 Holi',
+    rdgTitle:'📄 Reading：New Year Celebrations Around the World'
   },
   L4:{
     key:'L4',label:'第四課',
     words:L4W,
     groups:{0:L4W,1:L4W.slice(0,18),2:L4W.slice(18,27),3:L4W.slice(27)},
-    groupLabels:['全部 (39)','Dialogue (18)','食物 (9)','Reading (12)'],
-    sents:L4SENTS,grams:L4GRAMS,read:L4READ,
-    gramTitle:'⚙️ 文法挑戰：How many / How much / Which'
+    groupLabels:['全部 (39)','Dialogue 1-18','食物 18-26','Reading 27-39'],
+    numGroups:[
+      {label:'全部 (39)',words:L4W},
+      {label:'1–10',words:L4W.slice(0,10)},
+      {label:'11–20',words:L4W.slice(10,20)},
+      {label:'21–30',words:L4W.slice(20,30)},
+      {label:'31–39',words:L4W.slice(30,39)},
+      {label:'1–20',words:L4W.slice(0,20)},
+      {label:'1–30',words:L4W.slice(0,30)},
+    ],
+    sents:L4SENTS,grams:L4GRAMS,read:L4READ,dial:L4DIAL,rdg:L4RDG,
+    gramTitle:'⚙️ 文法挑戰：How many / How much / Which',
+    dialTitle:'🗣️ Dialogue：象糞紙園區導覽',
+    rdgTitle:"📄 Reading：Let's Go \"Number Two\""
   }
 };
 
-let W, GROUPS, SENTS, GRAMS, READ;
+// ══════════════════════════════════════════════════
+//  MUTABLE LESSON REFS (all render functions use these)
+// ══════════════════════════════════════════════════
+let W, GROUPS, SENTS, GRAMS, READ, DIAL, RDG;
 let currentLessonKey='L3';
+let activePool=[];   // shared pool for all units 1-4
+let rangeTab='cat';  // 'cat' | 'num' | 'custom'
+let activeRangeIdx=0; // which pill is selected
+let customSelected=new Set(); // word ids selected in custom mode
 
 function applyLesson(key){
   const L=LESSONS[key];
-  W=L.words; GROUPS=L.groups; SENTS=L.sents; GRAMS=L.grams; READ=L.read;
+  W=L.words; GROUPS=L.groups; SENTS=L.sents; GRAMS=L.grams; READ=L.read; DIAL=L.dial; RDG=L.rdg;
   document.getElementById('gramTitle').textContent=L.gramTitle;
+  document.getElementById('dialTitle').textContent=L.dialTitle;
+  document.getElementById('rdgTitle').textContent=L.rdgTitle;
   document.getElementById('sumTitle').textContent='🎉 '+L.label+' 練習完成！';
-  renderGroupPills(key);
   s1Shuffled=false;s2Shuffled=false;s3Shuffled=false;
+  rangeTab='cat'; activeRangeIdx=0;
+  activePool=[...W];
+  customSelected=new Set(W.map(w=>w.id));
+  renderRangePills();
 }
 
-function renderGroupPills(key){
-  const L=LESSONS[key];
-  document.getElementById('groupPills').innerHTML=L.groupLabels.map((lb,i)=>
-    `<button class="gpill${i===0?' on':''}" data-g="${i}">${lb}</button>`).join('');
-  document.getElementById('groupPills').addEventListener('click',gpillClick);
+// ── Range Selector ──
+function showRangeSelector(show){
+  document.getElementById('rangeSelector').classList.toggle('show',show);
 }
 
-function gpillClick(e){
-  const btn=e.target.closest('[data-g]');
+function renderRangePills(){
+  const L=LESSONS[currentLessonKey];
+  const pills=document.getElementById('rangePills');
+  const customPicker=document.getElementById('customPicker');
+  if(rangeTab==='custom'){
+    pills.style.display='none';
+    customPicker.style.display='block';
+    renderNumGrid();
+    return;
+  }
+  pills.style.display='flex';
+  customPicker.style.display='none';
+  if(rangeTab==='cat'){
+    const groups=[{label:L.groupLabels[0],words:L.words},...L.groupLabels.slice(1).map((lb,i)=>({label:lb,words:Object.values(L.groups)[i+1]}))];
+    pills.innerHTML=groups.map((g,i)=>`<button class="rpill${i===activeRangeIdx?' on':''}" data-ri="${i}" data-tab="cat">${g.label}</button>`).join('');
+    updateRangeInfo(groups[activeRangeIdx].words);
+  } else {
+    pills.innerHTML=L.numGroups.map((g,i)=>`<button class="rpill${i===activeRangeIdx?' on':''}" data-ri="${i}" data-tab="num">${g.label}</button>`).join('');
+    updateRangeInfo(L.numGroups[activeRangeIdx].words);
+  }
+  document.getElementById('rangePills').addEventListener('click',rangePillClick);
+}
+
+function rangePillClick(e){
+  const btn=e.target.closest('[data-ri]');
   if(!btn)return;
-  const g=parseInt(btn.dataset.g);
-  document.querySelectorAll('#groupPills .gpill').forEach(b=>b.classList.remove('on'));
+  const idx=parseInt(btn.dataset.ri);
+  activeRangeIdx=idx;
+  document.querySelectorAll('#rangePills .rpill').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  fcList=[...GROUPS[g]];fcIdx=0;showCard();
+  const L=LESSONS[currentLessonKey];
+  if(rangeTab==='cat'){
+    const groups=[L.words,...Object.values(L.groups).slice(1)];
+    activePool=[...groups[idx]];
+  } else {
+    activePool=[...L.numGroups[idx].words];
+  }
+  updateRangeInfo(activePool);
+  applyActivePool();
 }
 
-let XP=0,flipCount=0,s1Score=0,s2Score=0,s3Score=0,sentScore=0,gramScore=0,readDone=0;
+function updateRangeInfo(pool){
+  const txt=document.getElementById('rangeInfoTxt');
+  if(txt) txt.textContent=`${pool.length} 個單字（${pool[0]?.en} … ${pool[pool.length-1]?.en}）`;
+}
+
+// ── shared helper: push activePool to all units 1-4 and re-render ──
+function applyActivePool(){
+  fcList=[...activePool];fcIdx=0;
+  s1Pool=[...activePool];s1Used=0;
+  s2Pool=[...activePool];s2Used=0;
+  s3Pool=[...activePool];s3Used=0;
+  const au=parseInt(document.querySelector('.unav.on')?.dataset?.unit||'1');
+  if(au===1)showCard();
+  if(au===2)renderS1();
+  if(au===3)renderS2();
+  if(au===4)renderS3();
+}
+
+// range tab buttons
+document.getElementById('rtabCat').addEventListener('click',function(){
+  rangeTab='cat'; activeRangeIdx=0;
+  this.classList.add('on');
+  document.getElementById('rtabNum').classList.remove('on');
+  document.getElementById('rtabCustom').classList.remove('on');
+  renderRangePills();
+  const L=LESSONS[currentLessonKey];
+  activePool=[...L.words];
+  updateRangeInfo(activePool);
+  applyActivePool();
+});
+document.getElementById('rtabNum').addEventListener('click',function(){
+  rangeTab='num'; activeRangeIdx=0;
+  this.classList.add('on');
+  document.getElementById('rtabCat').classList.remove('on');
+  document.getElementById('rtabCustom').classList.remove('on');
+  renderRangePills();
+  const L=LESSONS[currentLessonKey];
+  activePool=[...L.numGroups[0].words];
+  applyActivePool();
+});
+
+document.getElementById('rtabCustom').addEventListener('click',function(){
+  rangeTab='custom';
+  this.classList.add('on');
+  document.getElementById('rtabCat').classList.remove('on');
+  document.getElementById('rtabNum').classList.remove('on');
+  renderRangePills();
+});
+
+// ── Custom Number Picker ──
+function renderNumGrid(){
+  const grid=document.getElementById('numGrid');
+  grid.innerHTML=W.map(w=>{
+    const label=w.num||w.en; // show number if exists, else short word
+    const isNoNum=!w.num;
+    return `<button class="nchk${customSelected.has(w.id)?' on':''}${isNoNum?' no-num':''}" data-wid="${w.id}">${label}</button>`;
+  }).join('');
+  updateCustomCount();
+  grid.addEventListener('click',function(e){
+    const btn=e.target.closest('[data-wid]');
+    if(!btn)return;
+    const id=parseInt(btn.dataset.wid);
+    if(customSelected.has(id)){
+      customSelected.delete(id);
+      btn.classList.remove('on');
+    } else {
+      customSelected.add(id);
+      btn.classList.add('on');
+    }
+    updateCustomCount();
+  });
+}
+
+function updateCustomCount(){
+  const el=document.getElementById('customCount');
+  if(el) el.textContent=customSelected.size;
+}
+
+// Apply text range input like "1-10, 15, 20-25"
+document.getElementById('rangeInpBtn').addEventListener('click',applyRangeInput);
+document.getElementById('rangeInp').addEventListener('keydown',e=>{if(e.key==='Enter')applyRangeInput();});
+
+function applyRangeInput(){
+  const val=document.getElementById('rangeInp').value.trim();
+  if(!val)return;
+  const numSet=new Set();
+  val.split(',').forEach(part=>{
+    const p=part.trim();
+    const m=p.match(/^(\d+)\s*[-–]\s*(\d+)$/);
+    if(m){
+      const a=parseInt(m[1]),b=parseInt(m[2]);
+      for(let i=Math.min(a,b);i<=Math.max(a,b);i++) numSet.add(i);
+    } else if(/^\d+$/.test(p)){
+      numSet.add(parseInt(p));
+    }
+  });
+  // map num → word id (only for words that have num)
+  customSelected.clear();
+  W.forEach(w=>{
+    if(w.num&&numSet.has(parseInt(w.num))) customSelected.add(w.id);
+  });
+  // re-render grid to reflect new selection
+  document.querySelectorAll('#numGrid .nchk').forEach(btn=>{
+    const id=parseInt(btn.dataset.wid);
+    btn.classList.toggle('on',customSelected.has(id));
+  });
+  updateCustomCount();
+}
+
+document.getElementById('selectAllBtn').addEventListener('click',function(){
+  W.forEach(w=>customSelected.add(w.id));
+  document.querySelectorAll('#numGrid .nchk').forEach(b=>b.classList.add('on'));
+  updateCustomCount();
+});
+
+document.getElementById('clearAllBtn').addEventListener('click',function(){
+  customSelected.clear();
+  document.querySelectorAll('#numGrid .nchk').forEach(b=>b.classList.remove('on'));
+  updateCustomCount();
+});
+
+document.getElementById('applyCustom').addEventListener('click',function(){
+  if(customSelected.size===0){
+    // nothing selected, keep current
+    return;
+  }
+  activePool=W.filter(w=>customSelected.has(w.id));
+  updateRangeInfo(activePool);
+  applyActivePool();
+});
+
+// ══════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════
+let XP=0,flipCount=0,s1Score=0,s2Score=0,s3Score=0,sentScore=0,gramScore=0,readDone=0,dialFillScore=0,rdgFillScore=0;
 let fcList=[],fcIdx=0,fcFlipped=new Set();
 let s1Pool=[],s1Used=0,s2Pool=[],s2Used=0,s3Pool=[],s3Used=0;
-let sentIdx=0,gramIdx=0;
+let sentIdx=0,gramIdx=0,dialFillIdx=0,rdgFillIdx=0;
+let dialMode='read',showZh=false,rdgMode='read',rdgShowZh=false;
 let canvas=null,ctx=null,drawing=false;
 
 const streak=parseInt(localStorage.getItem('en_streak')||'0');
 document.getElementById('strkEl').textContent=streak;
 
 function resetState(){
-  flipCount=0;s1Score=0;s2Score=0;s3Score=0;sentScore=0;gramScore=0;readDone=0;
-  fcFlipped=new Set();fcIdx=0;fcList=[...W];
-  s1Pool=[];s1Used=0;s1Shuffled=false;
-  s2Pool=[];s2Used=0;s2Shuffled=false;
-  s3Pool=[];s3Used=0;s3Shuffled=false;
-  sentIdx=0;gramIdx=0;
-  ['fcProg','s1Prog','s2Prog','s3Prog','sentProg','gramProg'].forEach(id=>setProg(id,0));
+  flipCount=0;s1Score=0;s2Score=0;s3Score=0;sentScore=0;gramScore=0;readDone=0;dialFillScore=0;rdgFillScore=0;
+  fcFlipped=new Set();fcIdx=0;
+  activePool=[...W];
+  fcList=[...activePool];
+  s1Pool=[...activePool];s1Used=0;s1Shuffled=false;
+  s2Pool=[...activePool];s2Used=0;s2Shuffled=false;
+  s3Pool=[...activePool];s3Used=0;s3Shuffled=false;
+  sentIdx=0;gramIdx=0;dialFillIdx=0;rdgFillIdx=0;
+  dialMode='read';showZh=false;rdgMode='read';rdgShowZh=false;
+  rangeTab='cat';activeRangeIdx=0;
+  customSelected=new Set(W.map(w=>w.id));
+  // reset range selector UI
+  const rc=document.getElementById('rtabCat'),rn=document.getElementById('rtabNum'),rcus=document.getElementById('rtabCustom');
+  if(rc)rc.classList.add('on'); if(rn)rn.classList.remove('on'); if(rcus)rcus.classList.remove('on');
+  const cp=document.getElementById('customPicker');
+  if(cp)cp.style.display='none';
+  const rp=document.getElementById('rangePills');
+  if(rp)rp.style.display='flex';
+  renderRangePills();
+  ['fcProg','s1Prog','s2Prog','s3Prog','sentProg','gramProg','dialProg','rdgProg'].forEach(id=>setProg(id,0));
   document.querySelectorAll('.unav').forEach(b=>b.classList.remove('done'));
   document.getElementById('summary').classList.remove('on');
   document.getElementById('xpEl').textContent=0;
@@ -569,11 +1507,14 @@ function resetState(){
   ['1','2','3'].forEach(n=>{
     const seq=document.getElementById('s'+n+'BtnSeq');
     const shf=document.getElementById('s'+n+'BtnShuffle');
-    if(seq){seq.classList.add('on');}
-    if(shf){shf.classList.remove('on');}
+    if(seq)seq.classList.add('on');
+    if(shf)shf.classList.remove('on');
   });
 }
 
+// ══════════════════════════════════════════════════
+//  XP
+// ══════════════════════════════════════════════════
 function addXP(n){
   XP+=n;
   document.getElementById('xpEl').textContent=XP;
@@ -584,6 +1525,9 @@ function addXP(n){
   setTimeout(()=>el.remove(),1500);
 }
 
+// ══════════════════════════════════════════════════
+//  LESSON SWITCHER
+// ══════════════════════════════════════════════════
 document.getElementById('lessonSw').addEventListener('click',function(e){
   const btn=e.target.closest('[data-lesson]');
   if(!btn)return;
@@ -598,9 +1542,13 @@ document.getElementById('lessonSw').addEventListener('click',function(e){
   document.querySelectorAll('.unav').forEach(b=>b.classList.remove('on'));
   document.getElementById('p1').classList.add('on');
   document.querySelector('[data-unit="1"]').classList.add('on');
+  showRangeSelector(true);
   showCard();
 });
 
+// ══════════════════════════════════════════════════
+//  UNIT NAV
+// ══════════════════════════════════════════════════
 document.getElementById('unitNav').addEventListener('click',function(e){
   const btn=e.target.closest('[data-unit]');
   if(!btn)return;
@@ -609,14 +1557,22 @@ document.getElementById('unitNav').addEventListener('click',function(e){
   document.querySelectorAll('.unav').forEach(b=>b.classList.remove('on'));
   document.getElementById('p'+n).classList.add('on');
   btn.classList.add('on');
-  if(n===2){if(!s1Pool.length)initS1();renderS1();}
-  if(n===3){if(!s2Pool.length)initS2();renderS2();}
-  if(n===4){if(!s3Pool.length)initS3();renderS3();}
+  // show range selector for units 1-4 only
+  showRangeSelector(n>=1&&n<=4);
+  if(n===1){showCard();}
+  if(n===2){if(!s1Pool.length){s1Pool=[...activePool];s1Used=0;}renderS1();}
+  if(n===3){if(!s2Pool.length){s2Pool=[...activePool];s2Used=0;}renderS2();}
+  if(n===4){if(!s3Pool.length){s3Pool=[...activePool];s3Used=0;}renderS3();}
   if(n===5)renderSent();
   if(n===6)renderGram();
   if(n===7)renderRead();
+  if(n===8)renderDial();
+  if(n===9)renderRdg();
 });
 
+// ══════════════════════════════════════════════════
+//  UNIT 1: FLASHCARDS
+// ══════════════════════════════════════════════════
 function showCard(){
   const w=fcList[fcIdx];
   document.getElementById('fcInner').classList.remove('flipped');
@@ -643,28 +1599,43 @@ document.getElementById('fcScene').addEventListener('click',function(){
     document.getElementById('sFlip').textContent=flipCount;
   }
 });
+document.getElementById('btnSndFront').addEventListener('click',function(e){
+  e.stopPropagation();speak(fcList[fcIdx].en);
+});
 document.getElementById('btnSndWord').addEventListener('click',e=>{e.stopPropagation();speak(fcList[fcIdx].en);});
 document.getElementById('btnSndEx').addEventListener('click',e=>{e.stopPropagation();speak(fcList[fcIdx].ex);});
 document.getElementById('btnChunk').addEventListener('click',function(e){
   e.stopPropagation();
   const box=document.getElementById('chunkBox');
   box.classList.toggle('on');
-  if(box.classList.contains('on'))
-    document.getElementById('chunkList').innerHTML=
-      fcList[fcIdx].chunks.map(c=>`<div class="chunk-item">▸ <b>${c}</b></div>`).join('');
+  if(box.classList.contains('on')){
+    const chunks=fcList[fcIdx].chunks;
+    document.getElementById('chunkList').innerHTML=chunks.map(c=>`
+      <div class="chunk-item">
+        <div class="chunk-en">▸ ${c}</div>
+        <div class="chunk-zh">${CHUNK_ZH[c]||''}</div>
+      </div>`).join('');
+  }
 });
 document.getElementById('btnNext').addEventListener('click',()=>{fcIdx=(fcIdx+1)%fcList.length;showCard();});
 document.getElementById('btnPrev').addEventListener('click',()=>{fcIdx=(fcIdx-1+fcList.length)%fcList.length;showCard();});
 document.getElementById('btnShuffle').addEventListener('click',()=>{fcList=shuffle([...fcList]);fcIdx=0;showCard();});
 
+// ══════════════════════════════════════════════════
+//  UNIT 2: SPELLING 1
+// ══════════════════════════════════════════════════
+// shuffle state for each spelling unit
 let s1Shuffled=false, s2Shuffled=false, s3Shuffled=false;
 
+// ── helper: format number prefix ──
 function numPfx(w){ return w.num ? `<span class="wnum">${w.num}.</span> ` : ''; }
 
-function initS1(){s1Pool=[...W];s1Used=0;s1Shuffled=false;}
+function initS1(){s1Pool=[...activePool];s1Used=0;s1Shuffled=false;}
 function renderS1(){
-  if(s1Used>=s1Pool.length){s1Pool=s1Shuffled?shuffle([...W]):[...W];s1Used=0;}
+  if(!s1Pool.length){s1Pool=[...activePool];s1Used=0;}
+  if(s1Used>=s1Pool.length){s1Pool=s1Shuffled?shuffle([...activePool]):[...activePool];s1Used=0;}
   const w=s1Pool[s1Used];
+  // distractors from full W so options are always meaningful
   const wrong=shuffle(W.filter(x=>x.id!==w.id)).slice(0,3);
   const opts=shuffle([w,...wrong]);
   document.getElementById('s1Area').innerHTML=`
@@ -694,19 +1665,23 @@ function renderS1(){
 }
 document.getElementById('btnNextS1').addEventListener('click',()=>{s1Used++;renderS1();});
 document.getElementById('s1BtnSeq').addEventListener('click',function(){
-  s1Shuffled=false;s1Pool=[...W];s1Used=0;
+  s1Shuffled=false;s1Pool=[...activePool];s1Used=0;
   this.classList.add('on');document.getElementById('s1BtnShuffle').classList.remove('on');
   renderS1();
 });
 document.getElementById('s1BtnShuffle').addEventListener('click',function(){
-  s1Shuffled=true;s1Pool=shuffle([...W]);s1Used=0;
+  s1Shuffled=true;s1Pool=shuffle([...activePool]);s1Used=0;
   this.classList.add('on');document.getElementById('s1BtnSeq').classList.remove('on');
   renderS1();
 });
 
-function initS2(){s2Pool=[...W];s2Used=0;s2Shuffled=false;}
+// ══════════════════════════════════════════════════
+//  UNIT 3: SPELLING 2
+// ══════════════════════════════════════════════════
+function initS2(){s2Pool=[...activePool];s2Used=0;s2Shuffled=false;}
 function renderS2(){
-  if(s2Used>=s2Pool.length){s2Pool=s2Shuffled?shuffle([...W]):[...W];s2Used=0;}
+  if(!s2Pool.length){s2Pool=[...activePool];s2Used=0;}
+  if(s2Used>=s2Pool.length){s2Pool=s2Shuffled?shuffle([...activePool]):[...activePool];s2Used=0;}
   const w=s2Pool[s2Used];
   document.getElementById('s2Area').innerHTML=`
     <div class="qblock">
@@ -742,19 +1717,23 @@ function checkS2w(w){
 document.getElementById('btnCheckS2').addEventListener('click',()=>checkS2w(s2Pool[s2Used%s2Pool.length]));
 document.getElementById('btnNextS2').addEventListener('click',()=>{s2Used++;renderS2();});
 document.getElementById('s2BtnSeq').addEventListener('click',function(){
-  s2Shuffled=false;s2Pool=[...W];s2Used=0;
+  s2Shuffled=false;s2Pool=[...activePool];s2Used=0;
   this.classList.add('on');document.getElementById('s2BtnShuffle').classList.remove('on');
   renderS2();
 });
 document.getElementById('s2BtnShuffle').addEventListener('click',function(){
-  s2Shuffled=true;s2Pool=shuffle([...W]);s2Used=0;
+  s2Shuffled=true;s2Pool=shuffle([...activePool]);s2Used=0;
   this.classList.add('on');document.getElementById('s2BtnSeq').classList.remove('on');
   renderS2();
 });
 
-function initS3(){s3Pool=[...W];s3Used=0;s3Shuffled=false;}
+// ══════════════════════════════════════════════════
+//  UNIT 4: SPELLING 3
+// ══════════════════════════════════════════════════
+function initS3(){s3Pool=[...activePool];s3Used=0;s3Shuffled=false;}
 function renderS3(){
-  if(s3Used>=s3Pool.length){s3Pool=s3Shuffled?shuffle([...W]):[...W];s3Used=0;}
+  if(!s3Pool.length){s3Pool=[...activePool];s3Used=0;}
+  if(s3Used>=s3Pool.length){s3Pool=s3Shuffled?shuffle([...activePool]):[...activePool];s3Used=0;}
   const w=s3Pool[s3Used];
   document.getElementById('s3Area').innerHTML=`
     <div class="qblock">
@@ -768,12 +1747,12 @@ function renderS3(){
   initCanvas(w);
 }
 document.getElementById('s3BtnSeq').addEventListener('click',function(){
-  s3Shuffled=false;s3Pool=[...W];s3Used=0;
+  s3Shuffled=false;s3Pool=[...activePool];s3Used=0;
   this.classList.add('on');document.getElementById('s3BtnShuffle').classList.remove('on');
   renderS3();
 });
 document.getElementById('s3BtnShuffle').addEventListener('click',function(){
-  s3Shuffled=true;s3Pool=shuffle([...W]);s3Used=0;
+  s3Shuffled=true;s3Pool=shuffle([...activePool]);s3Used=0;
   this.classList.add('on');document.getElementById('s3BtnSeq').classList.remove('on');
   renderS3();
 });
@@ -816,6 +1795,9 @@ document.getElementById('btnCheckS3').addEventListener('click',()=>{
 });
 document.getElementById('btnNextS3').addEventListener('click',()=>{s3Used++;renderS3();});
 
+// ══════════════════════════════════════════════════
+//  UNIT 5: SENTENCES
+// ══════════════════════════════════════════════════
 function renderSent(){
   const s=SENTS[sentIdx%SENTS.length];
   const enHtml=s.en.replace(/<hl>(.*?)<\/hl>/g,'<span class="hl">$1</span>');
@@ -851,6 +1833,9 @@ document.getElementById('btnCheckSent').addEventListener('click',()=>{
 });
 document.getElementById('btnNextSent').addEventListener('click',()=>{sentIdx++;renderSent();});
 
+// ══════════════════════════════════════════════════
+//  UNIT 6: GRAMMAR
+// ══════════════════════════════════════════════════
 function renderGram(){
   const q=GRAMS[gramIdx%GRAMS.length];
   const qHtml=q.q.replace('_____','<span class="gram-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
@@ -879,6 +1864,9 @@ function renderGram(){
 }
 document.getElementById('btnNextGram').addEventListener('click',()=>{gramIdx++;renderGram();});
 
+// ══════════════════════════════════════════════════
+//  UNIT 7: READING
+// ══════════════════════════════════════════════════
 function renderRead(){
   let p=READ.passage;
   READ.blanks.forEach(b=>{p=p.replace(`(${b.num})_____`,`<strong style="color:var(--accent)">(${b.num})</strong>`);});
@@ -909,6 +1897,9 @@ function renderRead(){
   });
 }
 
+// ══════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════
 function setProg(id,pct){const el=document.getElementById(id);if(el)el.style.width=pct+'%';}
 function markDone(unit){
   const btn=document.querySelector(`[data-unit="${unit}"]`);
@@ -929,10 +1920,298 @@ function speak(txt){
   window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
 }
 
-applyLesson('L3');
-fcList=[...W];
+// ══════════════════════════════════════════════════
+//  UNIT 8: DIALOGUE
+// ══════════════════════════════════════════════════
+// helper: highlight key words in text
+function highlightKeys(text, keys) {
+  if(!keys||keys.length===0) return escHtml(text);
+  let result = escHtml(text);
+  const sorted = [...keys].sort((a,b)=>b.length-a.length);
+  sorted.forEach(k=>{
+    const re=new RegExp('('+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+    result=result.replace(re,'<span class="kw">$1</span>');
+  });
+  return result;
+}
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderDial(){
+  // sync button states
+  const readBtn=document.getElementById('dialModeRead');
+  const fillBtn=document.getElementById('dialModeFill');
+  const zhBtn=document.getElementById('zhToggle');
+  const fillBtns=document.getElementById('fillBtns');
+
+  if(dialMode==='read'){
+    readBtn.classList.add('on');fillBtn.classList.remove('on');
+    fillBtns.style.display='none';
+    renderDialRead();
+  } else {
+    fillBtn.classList.add('on');readBtn.classList.remove('on');
+    fillBtns.style.display='flex';
+    renderDialFill();
+  }
+  zhBtn.classList.toggle('on',showZh);
+}
+
+function renderDialRead(){
+  const html = DIAL.map((line,i)=>{
+    if(line.type==='scene'){
+      return `<div class="dial-line scene-line"><div class="dial-body"><div class="dial-en" style="color:var(--gold);font-size:13px;">📍 ${escHtml(line.text)}</div></div></div>`;
+    }
+    const enHtml = highlightKeys(line.en, line.keys);
+    const spClass = 'sp-'+line.sp;
+    const noteId = 'note-'+i;
+    return `<div class="dial-line" data-i="${i}">
+      <div class="dial-speaker ${spClass}">${escHtml(line.speaker)}</div>
+      <div class="dial-body">
+        <div class="dial-en">${enHtml}</div>
+        <div class="dial-zh" style="display:${showZh?'block':'none'}">${escHtml(line.zh)}</div>
+        ${line.note?`<div class="dial-note" id="${noteId}">💡 ${escHtml(line.note)}</div>`:''}
+        <button class="dial-snd" data-en="${escHtml(line.en)}">🔊 聽發音</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('dialArea').innerHTML=html;
+
+  // bind sound buttons
+  document.querySelectorAll('#dialArea .dial-snd').forEach(btn=>{
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      speak(this.dataset.en);
+    });
+  });
+  // bind line click → toggle note
+  document.querySelectorAll('#dialArea .dial-line:not(.scene-line)').forEach(line=>{
+    line.addEventListener('click',function(){
+      const i=this.dataset.i;
+      const note=document.getElementById('note-'+i);
+      if(note) note.classList.toggle('show');
+    });
+  });
+}
+
+// fill-in-the-blank: uses lines that have keys
+function getDialFillLines(){
+  return DIAL.filter(l=>l.type!=='scene'&&l.keys&&l.keys.length>0);
+}
+function renderDialFill(){
+  const fillLines=getDialFillLines();
+  if(!fillLines.length){document.getElementById('dialArea').innerHTML='<div style="color:var(--muted);padding:20px;text-align:center;">本課對話無填空題目</div>';return;}
+  const line=fillLines[dialFillIdx%fillLines.length];
+  const total=fillLines.length;
+  const progress=Math.round(dialFillIdx/total*100);
+  setProg('dialProg',Math.min(100,Math.round(dialFillScore/total*100)));
+
+  // blank out first key word
+  const blankWord=line.keys[0];
+  const blankedEn=line.en.replace(
+    new RegExp('('+blankWord.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','i'),
+    `<input class="fill-input" id="fillInp" placeholder="${'_'.repeat(blankWord.length)}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">`
+  );
+  const spClass='sp-'+line.sp;
+
+  document.getElementById('dialArea').innerHTML=`
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:800;">第 ${(dialFillIdx%total)+1} / ${total} 題</div>
+    <div class="fill-card">
+      <div class="fill-speaker ${spClass}">🗣️ ${line.speaker} 說：</div>
+      <div class="fill-zh">（${line.zh}）</div>
+      <div class="fill-en">${blankedEn}</div>
+      <div class="fb" id="fillFb"></div>
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--muted);">💡 點選任意位置可聽完整句子發音
+      <button class="dial-snd" id="fillSnd">🔊 聽完整句子</button>
+    </div>`;
+
+  document.getElementById('fillSnd').addEventListener('click',()=>speak(line.en));
+  const inp=document.getElementById('fillInp');
+  if(inp){setTimeout(()=>inp.focus(),80);}
+  if(inp) inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkDialFill(line,blankWord);});
+}
+
+function checkDialFill(line, blankWord){
+  const inp=document.getElementById('fillInp');
+  if(!inp||inp.disabled)return;
+  const ans=inp.value.trim().toLowerCase();
+  inp.disabled=true;
+  const fb=document.getElementById('fillFb');
+  const correct=blankWord.toLowerCase();
+  if(ans===correct){
+    inp.classList.add('ok');
+    fb.className='fb on great';
+    fb.innerHTML=`<div class="fb-lv">🌟 答對了！</div>正確答案：<strong style="color:var(--accent)">${blankWord}</strong><br><span style="font-size:12px;color:var(--teal)">💡 ${line.note||''}</span>`;
+    addXP(8);dialFillScore++;
+    const fillLines=getDialFillLines();
+    setProg('dialProg',Math.min(100,Math.round(dialFillScore/fillLines.length*100)));
+    if(dialFillScore>=fillLines.length)markDone(8);
+  } else {
+    inp.classList.add('no');
+    fb.className='fb on retry';
+    fb.innerHTML=`<div class="fb-lv">💪 再想想</div>正確答案是：<strong style="color:var(--accent)">${blankWord}</strong><br><span style="font-size:12px;color:var(--teal)">💡 ${line.note||''}</span><br>
+      <button class="btn btn-danger" id="retryDial" style="margin-top:7px;font-size:12px;">再試一次 🔄</button>`;
+    setTimeout(()=>{const rb=document.getElementById('retryDial');if(rb)rb.addEventListener('click',()=>{inp.value='';inp.disabled=false;inp.classList.remove('no');fb.className='fb';setTimeout(()=>inp.focus(),50);});},50);
+  }
+}
+
+// button event bindings for dialogue panel
+document.getElementById('dialModeRead').addEventListener('click',function(){
+  dialMode='read';renderDial();
+});
+document.getElementById('dialModeFill').addEventListener('click',function(){
+  dialMode='fill';renderDial();
+});
+document.getElementById('zhToggle').addEventListener('click',function(){
+  showZh=!showZh;
+  this.classList.toggle('on',showZh);
+  if(dialMode==='read'){
+    document.querySelectorAll('#dialArea .dial-zh').forEach(el=>{el.style.display=showZh?'block':'none';});
+  }
+});
+document.getElementById('btnCheckFill').addEventListener('click',()=>{
+  const line=getDialFillLines()[dialFillIdx%getDialFillLines().length];
+  checkDialFill(line,line.keys[0]);
+});
+document.getElementById('btnNextFill').addEventListener('click',()=>{dialFillIdx++;renderDialFill();});
+
+// ══════════════════════════════════════════════════
+//  UNIT 9: READING TEXT
+// ══════════════════════════════════════════════════
+function renderRdg(){
+  const readBtn=document.getElementById('rdgModeRead');
+  const fillBtn=document.getElementById('rdgModeFill');
+  const zhBtn=document.getElementById('rdgZhToggle');
+  const fillBtns=document.getElementById('rdgFillBtns');
+  if(rdgMode==='read'){
+    readBtn.classList.add('on');fillBtn.classList.remove('on');
+    fillBtns.style.display='none';
+    renderRdgRead();
+  } else {
+    fillBtn.classList.add('on');readBtn.classList.remove('on');
+    fillBtns.style.display='flex';
+    renderRdgFill();
+  }
+  zhBtn.classList.toggle('on',rdgShowZh);
+}
+
+function renderRdgRead(){
+  const html=RDG.map((p,i)=>{
+    const enHtml=highlightKeys(p.en,p.keys);
+    const notesHtml=p.notes.map(n=>`<div class="rdg-note-item">💡 ${escHtml(n)}</div>`).join('');
+    return `
+    <div class="rdg-para" data-pi="${i}">
+      <div class="rdg-para-hdr">
+        <span class="rdg-num">${i+1}</span>
+        <span class="rdg-title">${escHtml(p.title)}</span>
+        <span class="rdg-toggle" id="rdg-tog-${i}">▶ 展開</span>
+      </div>
+      <div class="rdg-body" id="rdg-body-${i}">
+        <div class="rdg-en">${enHtml}</div>
+        <div class="rdg-zh" style="display:${rdgShowZh?'block':'none'}">${escHtml(p.zh)}</div>
+        <button class="rdg-snd" data-en="${escHtml(p.en)}">🔊 聽全段</button>
+        <div class="rdg-notes" style="margin-top:10px;">${notesHtml}</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('rdgArea').innerHTML=html;
+
+  // toggle open/close
+  document.querySelectorAll('#rdgArea .rdg-para').forEach(para=>{
+    para.addEventListener('click',function(e){
+      if(e.target.closest('.rdg-snd'))return;
+      const i=this.dataset.pi;
+      const body=document.getElementById('rdg-body-'+i);
+      const tog=document.getElementById('rdg-tog-'+i);
+      const isOpen=body.classList.contains('open');
+      body.classList.toggle('open',!isOpen);
+      tog.textContent=isOpen?'▶ 展開':'▼ 收起';
+      if(!isOpen){
+        addXP(3);rdgFillScore++;
+        setProg('rdgProg',Math.min(100,Math.round(rdgFillScore/RDG.length*100)));
+        if(rdgFillScore>=RDG.length)markDone(9);
+      }
+    });
+  });
+  // sound buttons
+  document.querySelectorAll('#rdgArea .rdg-snd').forEach(btn=>{
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();speak(this.dataset.en);
+    });
+  });
+}
+
+function renderRdgFill(){
+  const para=RDG[rdgFillIdx%RDG.length];
+  const total=RDG.length;
+  const blankWord=para.fill.answer;
+  // blank out the answer in the sentence
+  const blankedEn=para.fill.blank.replace(
+    new RegExp('('+blankWord.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','i'),
+    `<input class="fill-input" id="rdgFillInp" placeholder="${'_'.repeat(blankWord.length)}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">`
+  );
+  document.getElementById('rdgArea').innerHTML=`
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:800;">段落 ${(rdgFillIdx%total)+1} / ${total}　｜　${escHtml(para.title)}</div>
+    <div class="rdg-fill-card">
+      <div class="rdg-fill-label">📖 根據中文提示，填入正確的英文單字或片語：</div>
+      <div class="rdg-fill-en" style="color:var(--teal);font-size:13px;margin-bottom:10px;">${escHtml(para.zh)}</div>
+      <div class="rdg-fill-en">${blankedEn}</div>
+      <div class="fb" id="rdgFillFb"></div>
+    </div>
+    <div style="margin-top:6px;">
+      <button class="rdg-snd" id="rdgFillSnd">🔊 聽完整句子</button>
+    </div>`;
+
+  document.getElementById('rdgFillSnd').addEventListener('click',()=>speak(para.fill.blank.replace(/___+/,' ')));
+  const inp=document.getElementById('rdgFillInp');
+  if(inp){setTimeout(()=>inp.focus(),80);}
+  if(inp) inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkRdgFill(para);});
+}
+
+function checkRdgFill(para){
+  const inp=document.getElementById('rdgFillInp');
+  if(!inp||inp.disabled)return;
+  const ans=inp.value.trim().toLowerCase();
+  inp.disabled=true;
+  const fb=document.getElementById('rdgFillFb');
+  const correct=para.fill.answer.toLowerCase();
+  if(ans===correct){
+    inp.classList.add('ok');
+    fb.className='fb on great';
+    fb.innerHTML=`<div class="fb-lv">🌟 答對了！</div>正確答案：<strong style="color:var(--accent)">${para.fill.answer}</strong><br><span style="font-size:12px;color:var(--teal)">💡 ${para.fill.hint}</span>`;
+    addXP(8);rdgFillScore++;
+    setProg('rdgProg',Math.min(100,Math.round(rdgFillScore/RDG.length*100)));
+    if(rdgFillScore>=RDG.length)markDone(9);
+  } else {
+    inp.classList.add('no');
+    fb.className='fb on retry';
+    fb.innerHTML=`<div class="fb-lv">💪 再想想</div>正確答案：<strong style="color:var(--accent)">${para.fill.answer}</strong><br><span style="font-size:12px;color:var(--teal)">💡 ${para.fill.hint}</span><br>
+      <button class="btn btn-danger" id="retryRdg" style="margin-top:7px;font-size:12px;">再試一次 🔄</button>`;
+    setTimeout(()=>{const rb=document.getElementById('retryRdg');if(rb)rb.addEventListener('click',()=>{inp.value='';inp.disabled=false;inp.classList.remove('no');fb.className='fb';setTimeout(()=>inp.focus(),50);});},50);
+  }
+}
+
+// rdg button bindings
+document.getElementById('rdgModeRead').addEventListener('click',function(){rdgMode='read';renderRdg();});
+document.getElementById('rdgModeFill').addEventListener('click',function(){rdgMode='fill';renderRdg();});
+document.getElementById('rdgZhToggle').addEventListener('click',function(){
+  rdgShowZh=!rdgShowZh;
+  this.classList.toggle('on',rdgShowZh);
+  if(rdgMode==='read'){
+    document.querySelectorAll('#rdgArea .rdg-zh').forEach(el=>{el.style.display=rdgShowZh?'block':'none';});
+  }
+});
+document.getElementById('btnCheckRdgFill').addEventListener('click',()=>{
+  checkRdgFill(RDG[rdgFillIdx%RDG.length]);
+});
+document.getElementById('btnNextRdgFill').addEventListener('click',()=>{rdgFillIdx++;renderRdgFill();});
+
+// ══════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════
+applyLesson('L3');      // sets W, activePool=[...W], renders range pills
+fcList=[...activePool];
+showRangeSelector(true); // unit 1 is default, show it
 showCard();
-initS1();
 </script>
 </body>
 </html>
