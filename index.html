@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>英文學習站 L3 · L4</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4f8;--card:#fff;--card2:#f7f9fc;--border:#dde3ee;
+  --shadow:0 2px 16px rgba(60,80,140,.10);
+  --accent:#2d6be4;--accent2:#e05c5c;--teal:#1aaccf;
+  --green:#27a86a;--purple:#7c5cbf;--gold:#d4920a;
+  --text:#1a2340;--muted:#5a6a8a;--radius:14px;
+  --font:'Microsoft YaHei','微軟雅黑','PingFang TC','Nunito',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+.app{max-width:860px;margin:0 auto;padding:14px;}
+
+.hdr{display:flex;align-items:center;justify-content:space-between;background:var(--accent);border-radius:var(--radius);padding:12px 18px;margin-bottom:10px;box-shadow:0 4px 18px rgba(45,107,228,.25);}
+.logo{font-family:'Fredoka One',cursive;font-size:19px;color:#fff;}
+.logo span{color:#ffe082;}
+.hdr-right{display:flex;gap:7px;}
+.badge{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.2);border-radius:100px;padding:4px 12px;font-size:12px;font-weight:800;color:#fff;}
+
+/* LESSON SWITCHER */
+.lesson-sw{display:flex;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:8px;margin-bottom:10px;box-shadow:var(--shadow);}
+.lbtn{
+  flex:1;padding:10px 8px;border:2px solid var(--border);border-radius:10px;
+  background:var(--card2);color:var(--muted);font-family:var(--font);
+  font-weight:900;font-size:13px;cursor:pointer;transition:all .2s;text-align:center;
+}
+.lbtn.on{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 2px 10px rgba(45,107,228,.3);}
+.lbtn:hover:not(.on){border-color:var(--accent);color:var(--accent);}
+.lbtn .ltag{font-size:11px;opacity:.8;display:block;margin-top:2px;}
+
+.unit-nav{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:7px;margin-bottom:10px;box-shadow:var(--shadow);}
+.unav{padding:7px 3px;border:none;border-radius:9px;background:transparent;color:var(--muted);font-family:var(--font);font-weight:800;font-size:10.5px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.unav .ui{font-size:17px;line-height:1;}
+.unav.on{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(45,107,228,.3);}
+.unav.done{color:var(--green);}
+.unav:hover:not(.on){background:var(--card2);}
+
+.panel{display:none;animation:fadeU .25s ease;}
+.panel.on{display:block;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:10px;box-shadow:var(--shadow);}
+.stitle{font-family:'Fredoka One',cursive;font-size:17px;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+.prog-wrap{background:var(--card2);border-radius:100px;height:7px;margin-bottom:12px;border:1px solid var(--border);}
+.prog-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .5s ease;}
+
+.group-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.gpill{padding:5px 12px;border-radius:100px;font-size:12px;font-weight:800;border:1.5px solid var(--border);color:var(--muted);background:var(--card2);cursor:pointer;transition:all .2s;}
+.gpill.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* FLASHCARD */
+.fc-scene{perspective:1200px;cursor:pointer;margin-bottom:12px;min-height:210px;}
+.fc-inner{position:relative;width:100%;min-height:210px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.fc-inner.flipped{transform:rotateY(180deg);}
+.fc-face{position:absolute;width:100%;min-height:210px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;}
+.fc-front{background:linear-gradient(135deg,#e8f0ff,#f0f7ff);border:2px solid #c8d8f8;}
+.fc-back{background:linear-gradient(135deg,#e6f7f0,#f0faf6);border:2px solid #b2e0cc;transform:rotateY(180deg);}
+.fc-en{font-size:28px;font-weight:900;color:var(--accent);margin-bottom:5px;}
+.fc-pos{font-size:11px;color:var(--accent2);font-weight:800;margin-bottom:3px;text-transform:uppercase;}
+.fc-zh{font-size:20px;color:var(--text);font-weight:800;margin-bottom:3px;}
+.fc-tip{font-size:11px;color:var(--muted);margin-top:6px;}
+.fc-ex{font-size:13.5px;color:#2a6a4a;line-height:1.75;margin:7px 0;}
+.fc-ex .kw{color:var(--accent);font-weight:900;border-bottom:2px solid var(--accent);}
+.btn-row2{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:5px;}
+.ic-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:100px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
+.ic-btn:hover{border-color:var(--accent);color:var(--accent);background:#eef3ff;}
+.ic-btn.purple{border-color:var(--purple);color:var(--purple);}
+.ic-btn.purple:hover{background:#f0eeff;}
+.chunk-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:8px;text-align:left;display:none;}
+.chunk-box.on{display:block;animation:fadeU .2s ease;}
+.chunk-ttl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--purple);font-weight:900;margin-bottom:7px;}
+.chunk-item{font-size:13px;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border);}
+.chunk-item:last-child{border-bottom:none;}
+.chunk-item b{color:var(--teal);}
+.fc-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.fc-ctr{font-size:13px;color:var(--muted);font-weight:800;}
+
+.btn{padding:8px 18px;border:none;border-radius:9px;font-family:var(--font);font-weight:800;font-size:13px;cursor:pointer;transition:all .18s;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#2558c8;transform:translateY(-1px);}
+.btn-secondary{background:var(--card2);color:var(--text);border:1.5px solid var(--border);}
+.btn-secondary:hover{border-color:var(--accent);}
+.btn-danger{background:#fef0f0;color:var(--accent2);border:1.5px solid #f8cccc;}
+.action-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px;}
+
+/* SPELLING */
+.qblock{background:var(--card2);border-radius:12px;padding:16px;margin-bottom:10px;border:1px solid var(--border);}
+.qtext{font-size:14.5px;font-weight:800;line-height:1.6;margin-bottom:12px;}
+.qtext .en-big{font-size:22px;color:var(--accent);display:block;margin:5px 0;}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.choice-btn{padding:10px 13px;background:var(--card);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--font);font-weight:800;font-size:13.5px;cursor:pointer;transition:all .18s;text-align:left;}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:#eef3ff;}
+.choice-btn.ok{border-color:var(--green);background:#eefbf4;color:var(--green);}
+.choice-btn.no{border-color:var(--accent2);background:#fef0f0;color:var(--accent2);}
+.choice-btn.rev{border-color:var(--green);color:var(--green);}
+
+.sp-hint{background:linear-gradient(90deg,#fff8e0,#fffbe8);border:1.5px solid #f0d060;border-radius:9px;padding:9px 14px;font-size:13.5px;text-align:center;margin-bottom:10px;}
+.sp-hint .syl{color:var(--purple);font-weight:900;}
+.sp-hint .hint-txt{color:var(--gold);font-weight:900;font-size:17px;letter-spacing:3px;}
+.sp-input{width:100%;padding:11px 13px;background:#fff;border:2px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--font);font-size:17px;font-weight:800;text-align:center;letter-spacing:2px;outline:none;transition:border-color .2s;}
+.sp-input:focus{border-color:var(--accent);}
+
+.hw-label{font-size:24px;font-weight:900;color:var(--accent);text-align:center;margin-bottom:4px;letter-spacing:2px;}
+.hw-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px;}
+#hwCanvas{border:2px solid var(--border);border-radius:12px;background:#fff;cursor:crosshair;display:block;margin:0 auto 8px;touch-action:none;}
+
+.sent-en{font-size:15px;font-weight:800;line-height:1.7;margin-bottom:5px;}
+.sent-en .hl{color:var(--accent);background:#e8f0ff;border-radius:4px;padding:1px 5px;border-bottom:2px solid var(--accent);}
+.sent-zh{font-size:12px;color:var(--muted);margin-bottom:7px;}
+.sent-task{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:9px;}
+.textarea{width:100%;padding:10px 12px;background:#fff;border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:var(--font);font-size:13.5px;resize:none;min-height:65px;outline:none;transition:border-color .2s;}
+.textarea:focus{border-color:var(--accent);}
+
+.fb{margin-top:9px;padding:11px 13px;border-radius:9px;font-size:13px;line-height:1.75;display:none;}
+.fb.on{display:block;animation:fadeU .25s ease;}
+.fb.great{background:#eefbf4;border:1px solid #b2e0cc;}
+.fb.good{background:#e8f5fb;border:1px solid #a8d8ee;}
+.fb.retry{background:#fef0f0;border:1px solid #f8cccc;}
+.fb-lv{font-weight:900;font-size:14px;margin-bottom:3px;}
+.fb.great .fb-lv{color:var(--green);}
+.fb.good .fb-lv{color:var(--teal);}
+.fb.retry .fb-lv{color:var(--accent2);}
+
+.gram-q{font-size:14.5px;font-weight:800;line-height:1.7;margin-bottom:12px;}
+.gram-blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--accent);margin:0 4px;vertical-align:bottom;}
+.gram-exp{margin-top:9px;padding:11px 13px;background:#fffbe8;border-radius:8px;font-size:13px;line-height:1.75;display:none;border-left:4px solid var(--gold);color:#6a4800;}
+.gram-exp.on{display:block;}
+
+.passage{background:#f5fbf8;border-radius:12px;padding:15px;font-size:13.5px;line-height:2.1;margin-bottom:12px;border:1px solid #b2e0cc;border-left:4px solid var(--green);}
+.ptitle{font-family:'Fredoka One',cursive;font-size:14px;color:var(--green);margin-bottom:8px;}
+.opts-row{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0;}
+.obtn{padding:6px 13px;background:var(--card2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-weight:800;font-size:13px;cursor:pointer;transition:all .18s;}
+.obtn:hover:not(:disabled){border-color:var(--teal);background:#e8f8f4;}
+.obtn.o-ok{border-color:var(--green);color:var(--green);background:#eefbf4;}
+.obtn.o-no{border-color:var(--accent2);color:var(--accent2);background:#fef0f0;}
+.exp-box{margin-top:5px;padding:8px 12px;background:#eefbf4;border-radius:8px;font-size:13px;color:#2a6a4a;border:1px solid #b2e0cc;display:none;}
+.cap-note{margin-top:9px;padding:10px 13px;font-size:13px;color:#0a5a7a;background:#e8f5fb;border:1px solid #a8d8ee;border-radius:9px;}
+.cap-badge{display:inline-flex;align-items:center;gap:5px;background:#fef0f0;border:1px solid #f8cccc;border-radius:100px;padding:3px 10px;font-size:11px;font-weight:900;color:var(--accent2);margin-bottom:9px;}
+.order-bar{display:flex;align-items:center;gap:7px;margin-bottom:10px;padding:7px 12px;background:var(--card2);border:1px solid var(--border);border-radius:9px;}
+.order-bar label{font-size:12px;color:var(--muted);font-weight:800;flex:1;}
+.order-btn{padding:5px 12px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-family:var(--font);font-weight:800;font-size:12px;cursor:pointer;transition:all .18px;}
+.order-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.order-btn:hover:not(.on){border-color:var(--accent);color:var(--accent);}
+.wnum{display:inline-block;min-width:28px;font-size:12px;color:var(--muted);font-weight:800;vertical-align:middle;}
+
+.xp-pop{position:fixed;top:64px;right:16px;z-index:999;background:var(--gold);color:#fff;font-family:'Fredoka One',cursive;font-size:15px;padding:5px 14px;border-radius:100px;box-shadow:0 4px 14px rgba(212,146,10,.4);animation:xpUp 1.4s ease forwards;pointer-events:none;}
+@keyframes xpUp{0%{opacity:0;transform:translateY(14px) scale(.85);}20%{opacity:1;transform:translateY(-8px) scale(1.1);}70%{opacity:1;transform:translateY(-24px);}100%{opacity:0;transform:translateY(-42px) scale(.9);}}
+@keyframes fadeU{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.summary{background:linear-gradient(135deg,#e6fbf0,#eef7ff);border:2px solid var(--green);border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:12px;display:none;}
+.summary.on{display:block;animation:fadeU .4s ease;}
+.sum-title{font-family:'Fredoka One',cursive;font-size:21px;color:var(--green);margin-bottom:10px;}
+.sum-row{display:flex;justify-content:center;gap:24px;margin:12px 0;}
+.snum{font-family:'Fredoka One',cursive;font-size:32px;color:var(--accent);}
+.slbl{font-size:11px;color:var(--muted);font-weight:800;}
+
+@media(max-width:580px){.choice-grid{grid-template-columns:1fr;}.unit-nav{grid-template-columns:repeat(4,1fr);}.sum-row{gap:14px;}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="hdr">
+  <div class="logo">英文<span>學習站</span> 📚</div>
+  <div class="hdr-right">
+    <div class="badge">⭐ <span id="xpEl">0</span></div>
+    <div class="badge">🔥 <span id="strkEl">0</span>天</div>
+  </div>
+</header>
+
+<!-- LESSON SWITCHER -->
+<div class="lesson-sw" id="lessonSw">
+  <button class="lbtn on" data-lesson="L3">
+    📖 第三課
+    <span class="ltag">How Do You Celebrate the New Year?</span>
+  </button>
+  <button class="lbtn" data-lesson="L4">
+    📖 第四課
+    <span class="ltag">How Much Paper Do We Need?</span>
+  </button>
+</div>
+
+<!-- UNIT NAV -->
+<nav class="unit-nav" id="unitNav">
+  <button class="unav on" data-unit="1"><span class="ui">🃏</span>單字卡</button>
+  <button class="unav" data-unit="2"><span class="ui">🔤</span>拼字①</button>
+  <button class="unav" data-unit="3"><span class="ui">✏️</span>拼字②</button>
+  <button class="unav" data-unit="4"><span class="ui">✍️</span>拼字③</button>
+  <button class="unav" data-unit="5"><span class="ui">💬</span>句型</button>
+  <button class="unav" data-unit="6"><span class="ui">⚙️</span>文法</button>
+  <button class="unav" data-unit="7"><span class="ui">📖</span>閱讀</button>
+</nav>
+
+<!-- P1 FLASHCARDS -->
+<div class="panel on" id="p1">
+  <div class="card">
+    <div class="stitle" id="stitle1">🃏 單字卡</div>
+    <div class="group-pills" id="groupPills"></div>
+    <div class="prog-wrap"><div class="prog-fill" id="fcProg" style="width:0%"></div></div>
+    <div class="fc-scene" id="fcScene">
+      <div class="fc-inner" id="fcInner">
+        <div class="fc-face fc-front">
+          <div class="fc-pos" id="fcPos"></div>
+          <div class="fc-en" id="fcEn"></div>
+          <div class="fc-zh" id="fcZh"></div>
+          <div class="fc-tip">👆 點卡翻面看例句</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-pos" id="fcPosB" style="color:var(--purple)"></div>
+          <div style="font-size:19px;font-weight:900;color:var(--teal);margin-bottom:7px;" id="fcEnB"></div>
+          <div class="fc-ex" id="fcEx"></div>
+          <div class="btn-row2">
+            <button class="ic-btn" id="btnSndWord">🔊 單字</button>
+            <button class="ic-btn" id="btnSndEx">🔊 例句</button>
+            <button class="ic-btn purple" id="btnChunk">💡 語塊</button>
+          </div>
+          <div class="chunk-box" id="chunkBox">
+            <div class="chunk-ttl">🌐 母語人士常用語塊</div>
+            <div id="chunkList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="btn btn-secondary" id="btnPrev">← 上一張</button>
+      <span class="fc-ctr" id="fcCtr">1 / 39</span>
+      <button class="btn btn-primary" id="btnNext">下一張 →</button>
+    </div>
+    <div style="text-align:center;margin-top:8px;">
+      <button class="btn btn-secondary" id="btnShuffle" style="font-size:12px;">🔀 隨機洗牌</button>
+    </div>
+  </div>
+</div>
+
+<!-- P2 SPELLING 1 -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="stitle">🔤 拼字①：認識單字意思</div>
+    <div class="prog-wrap"><div class="prog-fill" id="s1Prog" style="width:0%"></div></div>
+    <div class="order-bar">
+      <label>排列順序：</label>
+      <button class="order-btn on" id="s1BtnSeq">📋 課本原序</button>
+      <button class="order-btn" id="s1BtnShuffle">🔀 隨機洗牌</button>
+    </div>
+    <div id="s1Area"></div>
+    <div class="action-row"><button class="btn btn-secondary" id="btnNextS1">換一題 →</button></div>
+  </div>
+</div>
+
+<!-- P3 SPELLING 2 -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="stitle">✏️ 拼字②：依提示拼寫</div>
+    <div class="prog-wrap"><div class="prog-fill" id="s2Prog" style="width:0%"></div></div>
+    <div class="order-bar">
+      <label>排列順序：</label>
+      <button class="order-btn on" id="s2BtnSeq">📋 課本原序</button>
+      <button class="order-btn" id="s2BtnShuffle">🔀 隨機洗牌</button>
+    </div>
+    <div id="s2Area"></div>
+    <div class="action-row">
+      <button class="btn btn-primary" id="btnCheckS2">確認 ✓</button>
+      <button class="btn btn-secondary" id="btnNextS2">換一題 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- P4 SPELLING 3 -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="stitle">✍️ 拼字③：手寫拼字</div>
+    <div class="prog-wrap"><div class="prog-fill" id="s3Prog" style="width:0%"></div></div>
+    <div class="order-bar">
+      <label>排列順序：</label>
+      <button class="order-btn on" id="s3BtnSeq">📋 課本原序</button>
+      <button class="order-btn" id="s3BtnShuffle">🔀 隨機洗牌</button>
+    </div>
+    <div id="s3Area"></div>
+    <div class="action-row">
+      <button class="btn btn-primary" id="btnCheckS3">確認 ✓</button>
+      <button class="btn btn-danger" id="btnClear">清除 ✕</button>
+      <button class="btn btn-secondary" id="btnNextS3">換一題 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- P5 SENTENCES -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="stitle">💬 課文句型練習</div>
+    <div class="prog-wrap"><div class="prog-fill" id="sentProg" style="width:0%"></div></div>
+    <div id="sentArea"></div>
+    <div class="action-row">
+      <button class="btn btn-primary" id="btnCheckSent">送出 ✓</button>
+      <button class="btn btn-secondary" id="btnNextSent">換一題 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- P6 GRAMMAR -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="stitle" id="gramTitle">⚙️ 文法挑戰</div>
+    <div class="prog-wrap"><div class="prog-fill" id="gramProg" style="width:0%"></div></div>
+    <div id="gramArea"></div>
+    <div class="action-row"><button class="btn btn-secondary" id="btnNextGram">換一題 →</button></div>
+  </div>
+</div>
+
+<!-- P7 READING -->
+<div class="panel" id="p7">
+  <div class="card">
+    <div class="stitle">📖 閱讀克漏字 <span style="font-size:12px;color:var(--muted);font-weight:400;">類會考</span></div>
+    <div id="readArea"></div>
+  </div>
+</div>
+
+<div class="summary" id="summary">
+  <div class="sum-title" id="sumTitle">🎉 今日練習完成！</div>
+  <div class="sum-row">
+    <div><div class="snum" id="sXP">0</div><div class="slbl">XP</div></div>
+    <div><div class="snum" id="sFlip">0</div><div class="slbl">翻牌</div></div>
+    <div><div class="snum" id="sSpell">0</div><div class="slbl">拼字✓</div></div>
+  </div>
+</div>
+
+</div>
+<script>
+// ══════════════════════════════════════════════════
+//  L3 DATA
+// ══════════════════════════════════════════════════
+const L3W=[
+  {id:1,en:"excuse me",pos:"phr.",zh:"抱歉；打擾",ex:"Excuse me. Is this the right bus to the zoo?",chunks:["Excuse me, can I ask you something?","Excuse me, where is the bathroom?","Excuse me! I need to get past."],syl:"ex-cuse me",hint:"ex_____ me"},
+  {id:2,en:"second",pos:"adj.",zh:"第二的",ex:"English is the second class on Mondays.",chunks:["the second time","second place","a second chance","the second floor"],syl:"sec-ond",hint:"sec___"},
+  {id:3,en:"third",pos:"adj.",zh:"第三的",ex:"I'm the third child. I have two big brothers.",chunks:["third place","the third floor","a third time","the third week"],syl:"third",hint:"th___d"},
+  {id:4,en:"March",pos:"n.",zh:"三月（= Mar.）",ex:"There is a party at Cindy's house on March 5.",chunks:["in March","on March 9","early March","March break"],syl:"March",hint:"M____"},
+  {id:5,en:"holiday",pos:"n.",zh:"假期；節日",ex:"We are going to Japan for our holidays.",chunks:["on holiday","a public holiday","holiday plans","school holiday"],syl:"hol-i-day",hint:"hol___day"},
+  {id:6,en:"street",pos:"n.",zh:"街道（= St.）",ex:"Wendy's flower shop is on Victor Street.",chunks:["on the street","across the street","street food","down the street"],syl:"street",hint:"str___t"},
+  {id:7,en:"festival",pos:"n.",zh:"節日；節慶",ex:"People celebrate the Moon Festival in fall.",chunks:["a music festival","the Moon Festival","festival of colors","attend a festival"],syl:"fes-ti-val",hint:"fes___val"},
+  {id:8,en:"when",pos:"adv.",zh:"何時",ex:"Amy: When is the grass concert? It's on April 13.",chunks:["When is...?","when I was young","when you are ready","Ask when it starts."],syl:"when",hint:"wh__"},
+  {id:9,en:"full",pos:"adj.",zh:"完整的",ex:"Dan, please write your full name here.",chunks:["full name","full moon","full time","a full meal"],syl:"full",hint:"f___"},
+  {id:10,en:"date",pos:"n.",zh:"日期",ex:"What's the date of Peter's birthday?",chunks:["What's the date?","the date today","a due date","set a date"],syl:"date",hint:"d__e"},
+  {id:11,en:"colorful",pos:"adj.",zh:"繽紛的",ex:"There are colorful pictures of flowers on the table.",chunks:["colorful clothes","colorful powders","a colorful life","colorful fireworks"],syl:"col-or-ful",hint:"col___ful"},
+  {id:12,en:"powder",pos:"n.",zh:"粉末",ex:"What is the white powder for?",chunks:["colorful powder","throw powder","baby powder","powder blue"],syl:"pow-der",hint:"pow___"},
+  {id:13,en:"month",pos:"n.",zh:"月",ex:"There are twelve months in a year.",chunks:["this month","next month","last month","every month"],syl:"month",hint:"m____h"},
+  {id:14,en:"January",pos:"n.",zh:"一月（= Jan.）",ex:"The festival starts on the first day of January.",chunks:["in January","on January 1st","early January","mid-January"],syl:"Jan-u-ar-y",hint:"Jan____ry"},
+  {id:15,en:"February",pos:"n.",zh:"二月（= Feb.）",ex:"Chinese New Year is in February this year.",chunks:["in February","on February 14","Valentine's Day in February","late February"],syl:"Feb-ru-ar-y",hint:"Feb____ry"},
+  {id:16,en:"April",pos:"n.",zh:"四月（= Apr.）",ex:"Lydia and her family go to the States in April every year.",chunks:["in April","on April 13","April Fools' Day","April break"],syl:"A-pril",hint:"Ap___"},
+  {id:17,en:"May",pos:"n.",zh:"五月",ex:"We have a lot of rain in Taiwan from May to June.",chunks:["in May","Mother's Day in May","on May 1","late May"],syl:"May",hint:"M__"},
+  {id:18,en:"June",pos:"n.",zh:"六月（= Jun.）",ex:"I can go to your shop's opening party on June 2.",chunks:["in June","Dragon Boat Festival in June","on June 5","early June"],syl:"June",hint:"J__e"},
+  {id:19,en:"July",pos:"n.",zh:"七月（= Jul.）",ex:"Jane's birthday party is on July 20.",chunks:["in July","on July 4","hot in July","mid-July"],syl:"Ju-ly",hint:"Ju__"},
+  {id:20,en:"August",pos:"n.",zh:"八月（= Aug.）",ex:"Father's Day in Taiwan is on August 8.",chunks:["in August","on August 8","summer in August","late August"],syl:"Au-gust",hint:"Au___t"},
+  {id:21,en:"September",pos:"n.",zh:"九月（= Sep.）",ex:"Shelly has a trip with her sister on September 15.",chunks:["in September","Teacher's Day in September","on September 28","early September"],syl:"Sep-tem-ber",hint:"Sep____ber"},
+  {id:22,en:"October",pos:"n.",zh:"十月（= Oct.）",ex:"The welcoming party for Julia is on October 3.",chunks:["in October","Halloween in October","on October 10","late October"],syl:"Oc-to-ber",hint:"Oc____ber"},
+  {id:23,en:"November",pos:"n.",zh:"十一月（= Nov.）",ex:"Thanksgiving falls on the fourth Thursday of November.",chunks:["in November","on November 11","late November","early November"],syl:"No-vem-ber",hint:"Nov____ber"},
+  {id:24,en:"December",pos:"n.",zh:"十二月（= Dec.）",ex:"Christmas is on December 25.",chunks:["in December","on December 25","Christmas in December","December 31"],syl:"De-cem-ber",hint:"Dec____ber"},
+  {id:25,en:"celebrate",pos:"v.",zh:"慶祝",ex:"Tom and his sister are celebrating their dad's birthday.",chunks:["celebrate a holiday","celebrate New Year","celebrate with friends","celebrating together"],syl:"cel-e-brate",hint:"cel____ate"},
+  {id:26,en:"for example",pos:"phr.",zh:"例如",ex:"The robot can do many things. For example, it can book tickets for you.",chunks:["For example, ...","for example, in Japan","for example, people eat...","give an example"],syl:"for ex-am-ple",hint:"for ex____le"},
+  {id:27,en:"each other",pos:"pron.",zh:"彼此；互相",ex:"The man and the woman are looking at each other.",chunks:["look at each other","help each other","talk to each other","know each other well"],syl:"each oth-er",hint:"each ot___"},
+  {id:28,en:"large",pos:"adj.",zh:"大的",ex:"I like this table. It is large.",chunks:["a large group","large bear costumes","a large city","a large amount"],syl:"large",hint:"l___e"},
+  {id:29,en:"first",pos:"adj.",zh:"第一的（= 1st）",ex:"This is my first visit to Taipei.",chunks:["first place","the first time","January 1st","first of all"],syl:"first",hint:"f___t"},
+  {id:30,en:"knock",pos:"v.",zh:"敲",ex:"Please knock on the door before you enter.",chunks:["knock on the door","knock on doors","knock and wait","knock knock!"],syl:"knock",hint:"kn__k"},
+  {id:31,en:"wish",pos:"v.",zh:"說；希望",ex:"We wish you a happy birthday.",chunks:["wish someone luck","make a wish","wish you well","best wishes"],syl:"wish",hint:"w__h"},
+  {id:32,en:"wash",pos:"v.",zh:"清洗",ex:"Brenda, please wash your hands. They are dirty.",chunks:["wash your hands","wash away bad luck","wash clothes","wash the dishes"],syl:"wash",hint:"w__h"},
+  {id:33,en:"thing",pos:"n.",zh:"事物；東西",ex:"There are many things in the box.",chunks:["many things","the same thing","things in common","a good thing"],syl:"thing",hint:"th___"},
+  {id:34,en:"in common",pos:"phr.",zh:"共同",ex:"Alex and his brother have many things in common.",chunks:["have things in common","two things in common","what we have in common","share in common"],syl:"in com-mon",hint:"in com___"},
+  {id:35,en:"mark",pos:"v.",zh:"標示；表示",ex:"What marks the start of spring?",chunks:["mark a new start","mark the date","mark an event","leave a mark"],syl:"mark",hint:"m__k"},
+  {id:36,en:"start",pos:"n.",zh:"開始",ex:"It's the start of the holidays! Let's go out and have fun.",chunks:["a new start","the start of","at the start","from the start"],syl:"start",hint:"st__t"},
+  {id:37,en:"costume",pos:"n.",zh:"化裝服",ex:"There are many costumes in that store.",chunks:["wear a costume","bear costumes","a Halloween costume","dress in costume"],syl:"cos-tume",hint:"cos____"},
+  {id:38,en:"luck",pos:"n.",zh:"運氣",ex:"Good luck with everything!",chunks:["good luck","bad luck","wish someone luck","for good luck"],syl:"luck",hint:"l__k"},
+  {id:39,en:"celebration",pos:"n.",zh:"慶祝活動",ex:"It's my grandpa's ninetieth birthday. We are having a big celebration.",chunks:["a big celebration","New Year celebration","birthday celebration","join the celebration"],syl:"cel-e-bra-tion",hint:"cel____tion"}
+];
+
+const L3SENTS=[
+  {en:'Can I please <hl>take</hl> ten days <hl>off</hl> from school?',zh:'我可以請十天假嗎？',task:'👉「take ... off」是什麼意思？這是課本 Dialogue 裡哪個人說的話？',hint:'take...off = 休假（從學校或工作請假）。Yash 向 Ms. Wang 請假的句子！',keys:['請假','take off','假期','休假']},
+  {en:'Yes. From the <hl>second</hl> to the <hl>third</hl> week of <hl>March</hl>.',zh:'是的，從三月第二週到第三週。',task:'👉 second 和 third 是什麼詞性？中文分別是什麼？',hint:'second（第二的）和 third（第三的）都是序數形容詞。1st=first，2nd=second，3rd=third！',keys:['序數','second','third','第二','第三']},
+  {en:'Everyone plays in the <hl>street</hl> with <hl>colorful</hl> powders.',zh:'每個人都在街上玩繽紛的彩色粉末。',task:'👉 colorful 修飾哪個名詞？plays 是什麼時態？',hint:'colorful（繽紛的）修飾 powders（粉末）。plays = 現在簡單式，描述節日固定習俗。',keys:['colorful','修飾','現在簡單式','powders','street']},
+  {en:'We also <hl>call</hl> it the <hl>festival</hl> of colors.',zh:'我們也稱它為色彩節。',task:'👉「call A B」是什麼句型？it 指的是什麼？',hint:'call A B = 稱 A 為 B。it = Holi，整句 = 我們也稱 Holi 為色彩節。',keys:['call','稱為','it','Holi','festival']},
+  {en:'The dancing bears <hl>knock</hl> on doors and <hl>wish</hl> everyone a happy New Year.',zh:'跳舞的熊敲門並祝大家新年快樂。',task:'👉 這句有幾個動詞？主詞是誰？',hint:'兩個動詞：knock 和 wish，主詞都是 The dancing bears（複數），動詞不加 s。',keys:['knock','wish','兩個動詞','複數','bears']},
+  {en:'Water can <hl>wash</hl> away bad luck.',zh:'水能洗去厄運。',task:'👉「wash away」是什麼意思？can 後面動詞用什麼形式？',hint:'wash away = 沖走；洗去。can 是情態動詞，後面接動詞原形 → can wash（不加 s）。',keys:['wash away','洗去','can','原形','情態動詞']},
+  {en:'New Year celebrations have two things <hl>in common</hl>.',zh:'新年慶典有兩個共同點。',task:'👉「in common」是什麼意思？這句的主詞和動詞各是什麼？',hint:'in common = 共同的。主詞 = celebrations，動詞 = have（複數不加 s）。',keys:['in common','共同','celebrations','have']},
+  {en:'They <hl>mark</hl> a new <hl>start</hl> and bring joy for all.',zh:'它們標示著新的開始，並為所有人帶來歡樂。',task:'👉 mark 和 bring 在這句是什麼詞性？and 在這裡連接什麼？',hint:'mark 和 bring 都是動詞，and 連接兩個動詞（mark...and bring...）。主詞 They = celebrations。',keys:['mark','bring','動詞','and','連接']}
+];
+
+const L3GRAMS=[
+  {q:"What's the date today? _____ March ninth.",cs:["It's on","It's","Its","On"],ans:1,exp:"回答「今天幾號？」用 It's + 月份 + 序數（不加 on）。\n💡 What's the date? → It's + 月份 + 序數"},
+  {q:"_____ is Double Tenth Day? It's _____ October tenth.",cs:["What / in","When / on","When / in","What / on"],ans:1,exp:"問日期用 When；特定日期前用介系詞 on。\n💡 When is...? → It's on + 月份 + 序數！"},
+  {q:"Holi is on March _____.",cs:["nine","ninth","nineth","nines"],ans:1,exp:"日期要用「序數」，9 的序數是 ninth（9th）。\n💡 1st=first, 2nd=second, 3rd=third, 4th以後加 th！"},
+  {q:"The show is on February _____.",cs:["thirteen","thirteenth","thirty","thirtieth"],ans:1,exp:"13 的序數是 thirteenth（13th）。\n💡 11th=eleventh, 12th=twelfth, 13th=thirteenth"},
+  {q:"Christmas is in _____.",cs:["December","December 25","the 25th","winter"],ans:0,exp:"in + 月份 = 在某月份。Christmas is in December（在十二月）。\n💡 in + 月份 vs on + 特定日期"},
+  {q:"Teacher's Day is _____ September twenty-eighth.",cs:["in","on","at","for"],ans:1,exp:"特定日期前用介系詞 on。\n💡 at（時刻）/ on（特定日期）/ in（月份、年份）！"},
+  {q:"What's _____ date today?",cs:["a","an","the","–"],ans:2,exp:"「the date」是固定說法，date 前用定冠詞 the。\n💡 What's the date? 是詢問日期的標準句型。"},
+  {q:"When is the basketball game? _____ March twentieth.",cs:["It on","It's on","Its on","On March"],ans:1,exp:"回答 When is...? 用 It's on + 月份 + 序數。\n💡 It's on + 月份 + 序數！"}
+];
+
+const L3READ={
+  title:"New Year Celebrations Around the World",
+  passage:"The world (1)_____ the start of a new year in different ways. In Romania, people wear large bear (2)_____ and dance for good luck on December 31st and January 1st. The dancing bears knock on doors and wish everyone a happy New Year. In Thailand, people (3)_____ their New Year Songkran. It is on April 13th. Water can wash away bad luck. New Year celebrations are different from country to country, but they have two things (4)_____. They mark a new start and bring joy for all.",
+  blanks:[
+    {num:1,opts:["celebrate","celebrates","celebrating","celebrated"],ans:1,exp:"主詞 The world = 第三人稱單數 + 描述習慣 → 現在簡單式加 s → celebrates。"},
+    {num:2,opts:["costume","costumes","costuming","costumed"],ans:1,exp:"wear + 複數名詞，前有 large 修飾 → costumes（化裝服）。"},
+    {num:3,opts:["call","calls","calling","called"],ans:0,exp:"主詞 people（複數）→ 現在簡單式複數不加 s → call。"},
+    {num:4,opts:["in common","common","in the common","commonly"],ans:0,exp:"have things in common = 有共同之處，是固定片語。"}
+  ],
+  cap:"課文 Reading「世界各地新年慶祝方式」與 111 年會考說明文閱讀高度吻合。介系詞 on/in/at 是 112、113 年必考考點！"
+};
+
+// ══════════════════════════════════════════════════
+//  L4 DATA
+// ══════════════════════════════════════════════════
+const L4W=[
+  {id:1,en:"make",pos:"v.",zh:"製作",ex:"Jessica is making a cake for her son.",chunks:["make paper","make a cake","make a choice","make a plan"],syl:"make",hint:"m__e"},
+  {id:2,en:"paper",pos:"n.",zh:"紙",ex:"The students draw a cat on paper in art class.",chunks:["poop paper","toilet paper","a piece of paper","paper bag"],syl:"pa-per",hint:"pa___"},
+  {id:3,en:"which",pos:"pron.",zh:"哪一個",ex:"Sam: Which do you like, apples or oranges? Alex: I like apples.",chunks:["Which one do you like?","Which do you prefer?","Which is better?","which one"],syl:"which",hint:"wh__h"},
+  {id:4,en:"choice",pos:"n.",zh:"選擇",ex:"Sorry. You have no choice.",chunks:["Good choice!","make a choice","have no choice","a great choice"],syl:"choice",hint:"ch____"},
+  {id:5,en:"walk",pos:"v.",zh:"走路",ex:"Leila walks to school every day.",chunks:["walk to school","take a walk","walk away","walk in the park"],syl:"walk",hint:"w__k"},
+  {id:6,en:"collect",pos:"v.",zh:"收集",ex:"The man is collecting pens of different colors.",chunks:["collect poop","collect stamps","collect data","collect money"],syl:"col-lect",hint:"col____"},
+  {id:7,en:"much",pos:"adj.",zh:"很多的",ex:"Don't drink too much coffee in a day.",chunks:["too much","how much","very much","so much"],syl:"much",hint:"m__h"},
+  {id:8,en:"need",pos:"v.",zh:"需要",ex:"I need some salt for this dish.",chunks:["we need","how much do you need?","I need help","need to do"],syl:"need",hint:"n__d"},
+  {id:9,en:"half",pos:"n.",zh:"一半",ex:"Half of the students in the classroom are girls.",chunks:["half a bucket","half time","half an hour","half of"],syl:"half",hint:"h__f"},
+  {id:10,en:"piece",pos:"n.",zh:"張；片",ex:"Please bring three pieces of paper to school tomorrow.",chunks:["a piece of paper","pieces of paper","a piece of cake","pieces of"],syl:"piece",hint:"p___e"},
+  {id:11,en:"boil",pos:"v.",zh:"烹煮；煮沸",ex:"Jamie is boiling vegetables for lunch.",chunks:["boil water","boil it","boil eggs","bring to a boil"],syl:"boil",hint:"b__l"},
+  {id:12,en:"after",pos:"prep.",zh:"在……之後",ex:"Jane walks in the park after lunch.",chunks:["after school","after that","after lunch","after class"],syl:"af-ter",hint:"af___"},
+  {id:13,en:"screen",pos:"n.",zh:"篩子；螢幕",ex:"Wash the screen on the door. It's dirty.",chunks:["put it on a screen","touch screen","big screen","screen time"],syl:"screen",hint:"scr___"},
+  {id:14,en:"work",pos:"n.",zh:"工作",ex:"My dad is at work right now.",chunks:["a lot of work","hard work","go to work","good work"],syl:"work",hint:"w__k"},
+  {id:15,en:"tour guide",pos:"n.",zh:"導遊",ex:"The tour guide is showing us around.",chunks:["tour guide","follow the tour guide","be a tour guide","tour guide service"],syl:"tour guide",hint:"tour g___e"},
+  {id:16,en:"poop",pos:"n.",zh:"糞便",ex:"Please collect poop in the bucket.",chunks:["elephant poop","poop paper","collect poop","poop gas"],syl:"poop",hint:"p__p"},
+  {id:17,en:"bucket",pos:"n.",zh:"桶",ex:"I need 4 buckets of water.",chunks:["a bucket of water","half a bucket","kick the bucket","bucket list"],syl:"buck-et",hint:"buck__"},
+  {id:18,en:"get",pos:"v.",zh:"拿取；獲得",ex:"First, get a bucket and collect some poop.",chunks:["get a bucket","get ready","get up","get to know"],syl:"get",hint:"g__"},
+  {id:19,en:"pumpkin pie",pos:"n.",zh:"南瓜派",ex:"Mom is making a pumpkin pie. I can't wait.",chunks:["make a pumpkin pie","pumpkin pie season","pumpkin pie spice","love pumpkin pie"],syl:"pump-kin pie",hint:"pump___ pie"},
+  {id:20,en:"fried chicken",pos:"n.",zh:"炸雞",ex:"Let's have fried chicken for dinner.",chunks:["fried chicken","have fried chicken","fried chicken wings","love fried chicken"],syl:"fried chick-en",hint:"fried ch_____"},
+  {id:21,en:"coffee",pos:"n.",zh:"咖啡",ex:"Have a cup of coffee and take a break.",chunks:["a cup of coffee","drink coffee","too much coffee","coffee shop"],syl:"cof-fee",hint:"cof___"},
+  {id:22,en:"juice",pos:"n.",zh:"果汁",ex:"A glass of juice, please.",chunks:["a glass of juice","orange juice","fruit juice","fresh juice"],syl:"juice",hint:"j___e"},
+  {id:23,en:"rice",pos:"n.",zh:"米飯",ex:"I eat two bowls of rice for lunch every day.",chunks:["a bowl of rice","eat rice","fried rice","rice paper"],syl:"rice",hint:"r__e"},
+  {id:24,en:"pork",pos:"n.",zh:"豬肉",ex:"The restaurant is famous for its pork dishes.",chunks:["pork dishes","roast pork","pork chop","eat pork"],syl:"pork",hint:"p__k"},
+  {id:25,en:"dozen",pos:"n.",zh:"十二個；一打",ex:"I would like two dozen eggs, please.",chunks:["a dozen eggs","two dozen","half a dozen","by the dozen"],syl:"doz-en",hint:"doz__"},
+  {id:26,en:"bread",pos:"n.",zh:"麵包",ex:"Emily's lunch today is a slice of bread and a cup of tea.",chunks:["a loaf of bread","a slice of bread","eat bread","fresh bread"],syl:"bread",hint:"br__d"},
+  {id:27,en:"slice",pos:"n.",zh:"片",ex:"Would you like a slice of bread?",chunks:["a slice of bread","a slice of pizza","slice by slice","two slices of"],syl:"slice",hint:"sl__e"},
+  {id:28,en:"useful",pos:"adj.",zh:"有用的",ex:"English is useful. You can make friends from different countries.",chunks:["very useful","be useful","useful information","useful tool"],syl:"use-ful",hint:"use___"},
+  {id:29,en:"mean",pos:"v.",zh:"意思是；有意義",ex:"What does the teacher mean?",chunks:["what does it mean?","mean poop","mean by that","I mean"],syl:"mean",hint:"m__n"},
+  {id:30,en:"power",pos:"n.",zh:"動力",ex:"The car runs on green power.",chunks:["get power from","green power","solar power","power source"],syl:"pow-er",hint:"pow__"},
+  {id:31,en:"garbage",pos:"n.",zh:"垃圾；廢物",ex:"Adam, take out the garbage now, please.",chunks:["take out the garbage","garbage truck","garbage collector","garbage can"],syl:"gar-bage",hint:"gar____"},
+  {id:32,en:"in other words",pos:"phr.",zh:"換句話說",ex:"In other words, she is good at basketball.",chunks:["In other words, ...","in other words, this means","that is to say","to put it simply"],syl:"in oth-er words",hint:"in other w___s"},
+  {id:33,en:"gas",pos:"n.",zh:"氣體燃料；汽油",ex:"The car is running out of gas.",chunks:["a tank of gas","run out of gas","natural gas","gas station"],syl:"gas",hint:"g__"},
+  {id:34,en:"believe",pos:"v.",zh:"相信",ex:"Can you believe it? The winner is a 10-year-old boy.",chunks:["believe it or not","I believe","can you believe?","hard to believe"],syl:"be-lieve",hint:"be____e"},
+  {id:35,en:"human",pos:"adj.",zh:"人類的",ex:"How small can the human eye see?",chunks:["human waste","human body","human being","human nature"],syl:"hu-man",hint:"hu___"},
+  {id:36,en:"kilometer",pos:"n.",zh:"公里",ex:"Tom walks three kilometers to school every morning.",chunks:["300 kilometers","run 5 kilometers","kilometers away","per kilometer"],syl:"ki-lo-me-ter",hint:"kilo____"},
+  {id:37,en:"tank",pos:"n.",zh:"槽",ex:"The water tank is full.",chunks:["a tank of gas","fish tank","fuel tank","water tank"],syl:"tank",hint:"t__k"},
+  {id:38,en:"stinky",pos:"adj.",zh:"臭的",ex:"What are you eating? It's stinky!",chunks:["not stinky at all","stinky tofu","stinky smell","very stinky"],syl:"stink-y",hint:"stink_"},
+  {id:39,en:"kind",pos:"n.",zh:"種類",ex:"A special kind of bus runs in England.",chunks:["a kind of","what kind of","this kind of","a special kind"],syl:"kind",hint:"k__d"}
+];
+
+const L4SENTS=[
+  {en:'Welcome to the Elephant POOPOOPAPER Park! You can <hl>make</hl> poop <hl>paper</hl>. <hl>Which</hl> one do you like?',zh:'歡迎來到大象便便紙園區！你可以製作便便紙。你喜歡哪一個？',task:'👉「Which one do you like?」和「What do you like?」有什麼不同？',hint:'Which 用在有限定的選項中（二選一或多選一），What 問的是開放性問題。這裡提供了「餵象」和「做紙」兩個選項，所以用 Which！',keys:['which','選項','有限','二選一','what']},
+  {en:'Everybody, get a <hl>bucket</hl> and <hl>collect</hl> some poop.',zh:'大家，去拿一個桶子並收集一些大便。',task:'👉 這是什麼句型？get 和 collect 是什麼詞性？',hint:'這是「祈使句」，省略主詞 you，直接用動詞原形開頭。get 和 collect 都是動詞原形，用 and 連接。',keys:['祈使句','動詞原形','and','get','collect']},
+  {en:'How <hl>much</hl> poop do we <hl>need</hl>? We need <hl>half</hl> a bucket.',zh:'我們需要多少大便？我們需要半桶。',task:'👉 為什麼用 How much 而不是 How many？',hint:'poop（大便）是不可數名詞，無法數個數，所以用 How much。可數名詞才用 How many！口訣：可數→many，不可數→much。',keys:['much','不可數','many','可數','how much']},
+  {en:'How many <hl>pieces</hl> of paper can that make?',zh:'這能做出幾張紙？',task:'👉 為什麼這裡用 How many 而不是 How much？',hint:'pieces 是可數名詞（可以數：1 piece, 2 pieces...），所以用 How many。How many + 可數名詞複數！',keys:['pieces','可數','how many','複數','piece']},
+  {en:'We clean the poop and <hl>boil</hl> it. <hl>After</hl> that, we put it on a <hl>screen</hl> and dry it in the sun.',zh:'我們清洗大便並把它煮沸。之後，我們把它放在篩子上，在太陽下曬乾。',task:'👉「After that」是什麼用法？它在句子中起什麼作用？',hint:'After that = 之後、接下來，是「時間連接詞片語」，用來說明步驟順序。課文中這是做紙的第三步驟！',keys:['After that','時間','步驟','順序','連接']},
+  {en:"People don't like poop, but some poop is <hl>useful</hl>.",zh:'人們不喜歡大便，但有些大便是有用的。',task:'👉「but」在這句中的功能是什麼？useful 是什麼詞性？',hint:'but 是對等連接詞，表示「轉折」（但是）。useful 是形容詞（有用的），放在 be 動詞後當「述語形容詞」。',keys:['but','轉折','useful','形容詞','述語']},
+  {en:'The bus gets <hl>power</hl> from <hl>garbage</hl> and human waste. It can run about three hundred <hl>kilometers</hl>.',zh:'這輛公車從垃圾和人類廢棄物獲得動力。它可以行駛約三百公里。',task:'👉「get power from」是什麼意思？can 後面動詞用什麼形式？',hint:'get power from = 從……獲得動力。can 是情態動詞，後面接動詞原形 → can run（不加 s）。',keys:['get power from','can','動詞原形','情態動詞','run']},
+  {en:'<hl>In other words</hl>, the bus can go from Taipei to Tainan with a <hl>tank</hl> of <hl>gas</hl>.',zh:'換句話說，這輛公車用一槽氣體燃料就能從台北到台南。',task:'👉「In other words」是什麼意思？它出現在文章的什麼位置？',hint:'In other words = 換句話說，用來「重新解釋」前面說的話，讓讀者更容易理解。這是會考閱讀常見的轉折語！',keys:['in other words','換句話說','重新解釋','轉折','閱讀']}
+];
+
+const L4GRAMS=[
+  {q:"_____ poop do we need? We need half a bucket.",cs:["How many","How much","How long","How often"],ans:1,exp:"poop（大便）是不可數名詞，無法數個數 → 用 How much。\n💡 可數名詞 → How many；不可數名詞 → How much！"},
+  {q:"_____ pieces of paper can that make?",cs:["How many","How much","How long","How often"],ans:0,exp:"pieces 是可數名詞（可以數 1 piece, 2 pieces...）→ 用 How many。\n💡 How many + 可數名詞複數！"},
+  {q:"How much _____ does she drink a day?",cs:["milk","apples","books","eggs"],ans:0,exp:"How much 後面接不可數名詞，milk（牛奶）是不可數的。\n💡 milk / water / juice / coffee = 不可數 → 用 How much！"},
+  {q:"How many _____ do you need?",cs:["water","bread","rice","slices"],ans:3,exp:"How many 後面接可數名詞複數，slices（片/份）是可數的。\n💡 How many + 可數名詞複數！"},
+  {q:"_____ does Kevin like, cats or dogs?",cs:["Which one","How much","How many","What kind"],ans:0,exp:"有限選項（cats or dogs）→ 用 Which one。\n💡 Which (one) + do/does + 主詞 + 動詞 + A or B?"},
+  {q:"Which does Jack love, beef noodles _____ stinky tofu?",cs:["or","and","but","so"],ans:0,exp:"Which...or...是固定句型，表示「二選一」。\n💡 Which (one) do you like, A or B? 是詢問選擇的標準句型！"},
+  {q:"They don't need _____ water.",cs:["some","any","many","much"],ans:1,exp:"否定句中，不可數名詞用 any（不用 some）。\n💡 肯定 → some；否定/疑問 → any！"},
+  {q:"I would like two _____ of bread.",cs:["slice","slices","piece","pieces"],ans:1,exp:"two 後面接可數名詞複數 → slices（片）。a slice of bread = 一片麵包；two slices of bread = 兩片麵包。\n💡 two / three... 後面→ 名詞複數加 s！"}
+];
+
+const L4READ={
+  title:"Let's Go 'Number Two'",
+  passage:"People don't like poop, but some poop is (1)_____. For example, we can make paper with elephant poop. A special (2)_____ of bus runs in England. People call it the 'Bio-Bus.' The bus gets power from garbage and human waste. It can run about three hundred kilometers. (3)_____, the bus can go from Taipei to Tainan with a tank of gas. Bio-Buses are good for the Earth. Believe it or not, these buses are not (4)_____ at all.",
+  blanks:[
+    {num:1,opts:["useful","useless","stinky","large"],ans:0,exp:"課文開頭說「但有些大便是有用的」→ useful（有用的）。段落主題是「廢物也能有用途」。"},
+    {num:2,opts:["kind","piece","slice","bucket"],ans:0,exp:"「a kind of」= 一種……，這裡說「一種特別的公車」→ kind（種類）是固定用法。\n💡 a kind of = a type of"},
+    {num:3,opts:["In other words","For example","However","In addition"],ans:0,exp:"這句是對前句（行駛300公里）的具體解釋（從台北到台南）→ In other words（換句話說）。"},
+    {num:4,opts:["stinky","useful","large","kind"],ans:0,exp:"前有 not，表示否定 → not stinky at all = 一點都不臭。Believe it or not 提示這是出人意料的事！"}
+  ],
+  cap:"Reading「Let's Go Number Two」的說明文結構與 112 年會考說明文閱讀相同。How much/many 和不可數名詞是 113 年會考必考語法考點！"
+};
+
+L3W.forEach((w,i)=>{ w.num=String(i+1); });
+L4W.slice(0,17).forEach((w,i)=>{ w.num=String(i+1); });
+L4W[17].num=null;
+L4W.slice(18,27).forEach((w,i)=>{ w.num=String(18+i); });
+L4W.slice(27,38).forEach((w,i)=>{ w.num=String(27+i); });
+L4W[38].num=null;
+
+const LESSONS={
+  L3:{
+    key:'L3',label:'第三課',
+    words:L3W,
+    groups:{0:L3W,1:L3W.slice(0,12),2:L3W.slice(12,24),3:L3W.slice(24)},
+    groupLabels:['全部 (39)','Dialogue (12)','月份 (12)','Reading (15)'],
+    sents:L3SENTS,grams:L3GRAMS,read:L3READ,
+    gramTitle:'⚙️ 文法挑戰：序數與日期'
+  },
+  L4:{
+    key:'L4',label:'第四課',
+    words:L4W,
+    groups:{0:L4W,1:L4W.slice(0,18),2:L4W.slice(18,27),3:L4W.slice(27)},
+    groupLabels:['全部 (39)','Dialogue (18)','食物 (9)','Reading (12)'],
+    sents:L4SENTS,grams:L4GRAMS,read:L4READ,
+    gramTitle:'⚙️ 文法挑戰：How many / How much / Which'
+  }
+};
+
+let W, GROUPS, SENTS, GRAMS, READ;
+let currentLessonKey='L3';
+
+function applyLesson(key){
+  const L=LESSONS[key];
+  W=L.words; GROUPS=L.groups; SENTS=L.sents; GRAMS=L.grams; READ=L.read;
+  document.getElementById('gramTitle').textContent=L.gramTitle;
+  document.getElementById('sumTitle').textContent='🎉 '+L.label+' 練習完成！';
+  renderGroupPills(key);
+  s1Shuffled=false;s2Shuffled=false;s3Shuffled=false;
+}
+
+function renderGroupPills(key){
+  const L=LESSONS[key];
+  document.getElementById('groupPills').innerHTML=L.groupLabels.map((lb,i)=>
+    `<button class="gpill${i===0?' on':''}" data-g="${i}">${lb}</button>`).join('');
+  document.getElementById('groupPills').addEventListener('click',gpillClick);
+}
+
+function gpillClick(e){
+  const btn=e.target.closest('[data-g]');
+  if(!btn)return;
+  const g=parseInt(btn.dataset.g);
+  document.querySelectorAll('#groupPills .gpill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  fcList=[...GROUPS[g]];fcIdx=0;showCard();
+}
+
+let XP=0,flipCount=0,s1Score=0,s2Score=0,s3Score=0,sentScore=0,gramScore=0,readDone=0;
+let fcList=[],fcIdx=0,fcFlipped=new Set();
+let s1Pool=[],s1Used=0,s2Pool=[],s2Used=0,s3Pool=[],s3Used=0;
+let sentIdx=0,gramIdx=0;
+let canvas=null,ctx=null,drawing=false;
+
+const streak=parseInt(localStorage.getItem('en_streak')||'0');
+document.getElementById('strkEl').textContent=streak;
+
+function resetState(){
+  flipCount=0;s1Score=0;s2Score=0;s3Score=0;sentScore=0;gramScore=0;readDone=0;
+  fcFlipped=new Set();fcIdx=0;fcList=[...W];
+  s1Pool=[];s1Used=0;s1Shuffled=false;
+  s2Pool=[];s2Used=0;s2Shuffled=false;
+  s3Pool=[];s3Used=0;s3Shuffled=false;
+  sentIdx=0;gramIdx=0;
+  ['fcProg','s1Prog','s2Prog','s3Prog','sentProg','gramProg'].forEach(id=>setProg(id,0));
+  document.querySelectorAll('.unav').forEach(b=>b.classList.remove('done'));
+  document.getElementById('summary').classList.remove('on');
+  document.getElementById('xpEl').textContent=0;
+  XP=0;
+  ['1','2','3'].forEach(n=>{
+    const seq=document.getElementById('s'+n+'BtnSeq');
+    const shf=document.getElementById('s'+n+'BtnShuffle');
+    if(seq){seq.classList.add('on');}
+    if(shf){shf.classList.remove('on');}
+  });
+}
+
+function addXP(n){
+  XP+=n;
+  document.getElementById('xpEl').textContent=XP;
+  document.getElementById('sXP').textContent=XP;
+  const el=document.createElement('div');
+  el.className='xp-pop';el.textContent='+'+n+' XP';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1500);
+}
+
+document.getElementById('lessonSw').addEventListener('click',function(e){
+  const btn=e.target.closest('[data-lesson]');
+  if(!btn)return;
+  const key=btn.dataset.lesson;
+  if(key===currentLessonKey)return;
+  currentLessonKey=key;
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  applyLesson(key);
+  resetState();
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.unav').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p1').classList.add('on');
+  document.querySelector('[data-unit="1"]').classList.add('on');
+  showCard();
+});
+
+document.getElementById('unitNav').addEventListener('click',function(e){
+  const btn=e.target.closest('[data-unit]');
+  if(!btn)return;
+  const n=parseInt(btn.dataset.unit);
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.unav').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p'+n).classList.add('on');
+  btn.classList.add('on');
+  if(n===2){if(!s1Pool.length)initS1();renderS1();}
+  if(n===3){if(!s2Pool.length)initS2();renderS2();}
+  if(n===4){if(!s3Pool.length)initS3();renderS3();}
+  if(n===5)renderSent();
+  if(n===6)renderGram();
+  if(n===7)renderRead();
+});
+
+function showCard(){
+  const w=fcList[fcIdx];
+  document.getElementById('fcInner').classList.remove('flipped');
+  document.getElementById('chunkBox').classList.remove('on');
+  document.getElementById('fcPos').textContent=w.pos;
+  document.getElementById('fcEn').textContent=w.en;
+  document.getElementById('fcZh').textContent=w.zh;
+  document.getElementById('fcPosB').textContent=w.pos;
+  document.getElementById('fcEnB').textContent=w.en;
+  const re=new RegExp('(\\b'+w.en.replace(/[-.*+?^${}()|[\]\\]/g,'\\$&').replace(/ /g,'\\s+')+'\\b)','gi');
+  const exHL=w.ex.replace(re,'<span class="kw">$1</span>');
+  document.getElementById('fcEx').innerHTML=exHL;
+  document.getElementById('fcCtr').textContent=(fcIdx+1)+' / '+fcList.length;
+  setProg('fcProg',Math.round(fcFlipped.size/W.length*100));
+  document.getElementById('sFlip').textContent=flipCount;
+}
+
+document.getElementById('fcScene').addEventListener('click',function(){
+  const inner=document.getElementById('fcInner');
+  inner.classList.toggle('flipped');
+  if(inner.classList.contains('flipped')&&!fcFlipped.has(fcList[fcIdx].id)){
+    fcFlipped.add(fcList[fcIdx].id);flipCount++;addXP(2);
+    setProg('fcProg',Math.round(fcFlipped.size/W.length*100));
+    document.getElementById('sFlip').textContent=flipCount;
+  }
+});
+document.getElementById('btnSndWord').addEventListener('click',e=>{e.stopPropagation();speak(fcList[fcIdx].en);});
+document.getElementById('btnSndEx').addEventListener('click',e=>{e.stopPropagation();speak(fcList[fcIdx].ex);});
+document.getElementById('btnChunk').addEventListener('click',function(e){
+  e.stopPropagation();
+  const box=document.getElementById('chunkBox');
+  box.classList.toggle('on');
+  if(box.classList.contains('on'))
+    document.getElementById('chunkList').innerHTML=
+      fcList[fcIdx].chunks.map(c=>`<div class="chunk-item">▸ <b>${c}</b></div>`).join('');
+});
+document.getElementById('btnNext').addEventListener('click',()=>{fcIdx=(fcIdx+1)%fcList.length;showCard();});
+document.getElementById('btnPrev').addEventListener('click',()=>{fcIdx=(fcIdx-1+fcList.length)%fcList.length;showCard();});
+document.getElementById('btnShuffle').addEventListener('click',()=>{fcList=shuffle([...fcList]);fcIdx=0;showCard();});
+
+let s1Shuffled=false, s2Shuffled=false, s3Shuffled=false;
+
+function numPfx(w){ return w.num ? `<span class="wnum">${w.num}.</span> ` : ''; }
+
+function initS1(){s1Pool=[...W];s1Used=0;s1Shuffled=false;}
+function renderS1(){
+  if(s1Used>=s1Pool.length){s1Pool=s1Shuffled?shuffle([...W]):[...W];s1Used=0;}
+  const w=s1Pool[s1Used];
+  const wrong=shuffle(W.filter(x=>x.id!==w.id)).slice(0,3);
+  const opts=shuffle([w,...wrong]);
+  document.getElementById('s1Area').innerHTML=`
+    <div class="qblock">
+      <div class="qtext">看單字，選出正確的中文意思：
+        <div style="margin:8px 0 4px;">${numPfx(w)}<span class="en-big" style="display:inline;font-size:22px;">${w.en}</span>
+        <button class="ic-btn" id="s1snd" style="margin-left:6px;">🔊 發音</button></div>
+      </div>
+      <div class="choice-grid">
+        ${opts.map((o,i)=>`<button class="choice-btn" data-correct="${o.id===w.id}" data-zh="${w.zh}">${o.zh}</button>`).join('')}
+      </div>
+      <div class="fb" id="s1fb"></div>
+    </div>`;
+  document.getElementById('s1snd').addEventListener('click',e=>{e.stopPropagation();speak(w.en);});
+  document.querySelectorAll('#s1Area .choice-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#s1Area .choice-btn').forEach(b=>b.disabled=true);
+      const ok=this.dataset.correct==='true';
+      this.classList.add(ok?'ok':'no');
+      if(!ok)document.querySelectorAll('#s1Area .choice-btn').forEach(b=>{if(b.textContent.trim()===w.zh)b.classList.add('rev');});
+      const fb=document.getElementById('s1fb');
+      fb.className='fb on '+(ok?'great':'retry');
+      fb.innerHTML=ok?'<div class="fb-lv">🌟 答對了！</div>你認識這個單字的意思！':'<div class="fb-lv">💪 再想想</div>正確答案已標示，記住它！';
+      if(ok){addXP(5);s1Score++;setProg('s1Prog',Math.round(Math.min(s1Score,39)/39*100));markDone(2);}
+    });
+  });
+}
+document.getElementById('btnNextS1').addEventListener('click',()=>{s1Used++;renderS1();});
+document.getElementById('s1BtnSeq').addEventListener('click',function(){
+  s1Shuffled=false;s1Pool=[...W];s1Used=0;
+  this.classList.add('on');document.getElementById('s1BtnShuffle').classList.remove('on');
+  renderS1();
+});
+document.getElementById('s1BtnShuffle').addEventListener('click',function(){
+  s1Shuffled=true;s1Pool=shuffle([...W]);s1Used=0;
+  this.classList.add('on');document.getElementById('s1BtnSeq').classList.remove('on');
+  renderS1();
+});
+
+function initS2(){s2Pool=[...W];s2Used=0;s2Shuffled=false;}
+function renderS2(){
+  if(s2Used>=s2Pool.length){s2Pool=s2Shuffled?shuffle([...W]):[...W];s2Used=0;}
+  const w=s2Pool[s2Used];
+  document.getElementById('s2Area').innerHTML=`
+    <div class="qblock">
+      <div class="qtext">看中文，拼出英文單字：
+        <div style="margin:7px 0 4px;">${numPfx(w)}<span class="en-big" style="display:inline;color:var(--green)">${w.zh}</span></div>
+      </div>
+      <div class="sp-hint">
+        <span class="syl">音節：${w.syl}</span>　<span class="hint-txt">${w.hint}</span>
+      </div>
+      <input class="sp-input" id="s2inp" placeholder="在此輸入英文…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <div class="fb" id="s2fb"></div>
+    </div>`;
+  setTimeout(()=>{const el=document.getElementById('s2inp');if(el)el.focus();},80);
+  document.getElementById('s2inp').addEventListener('keydown',e=>{if(e.key==='Enter')checkS2w(w);});
+}
+function checkS2w(w){
+  const inp=document.getElementById('s2inp');
+  if(!inp||inp.disabled)return;
+  const ans=inp.value.trim().toLowerCase();
+  inp.disabled=true;
+  const fb=document.getElementById('s2fb');
+  if(ans===w.en.toLowerCase()){
+    fb.className='fb on great';
+    fb.innerHTML=`<div class="fb-lv">🌟 拼對了！</div><span style="color:var(--accent);font-weight:900">${w.en}</span> — ${w.zh}`;
+    inp.style.borderColor='var(--green)';
+    addXP(8);s2Score++;setProg('s2Prog',Math.round(Math.min(s2Score,39)/39*100));markDone(3);
+  } else {
+    fb.className='fb on retry';
+    fb.innerHTML=`<div class="fb-lv">💪 再試試</div>正確拼法：<span style="color:var(--accent);font-weight:900;font-size:17px">${w.en}</span>`;
+    inp.style.borderColor='var(--accent2)';
+  }
+}
+document.getElementById('btnCheckS2').addEventListener('click',()=>checkS2w(s2Pool[s2Used%s2Pool.length]));
+document.getElementById('btnNextS2').addEventListener('click',()=>{s2Used++;renderS2();});
+document.getElementById('s2BtnSeq').addEventListener('click',function(){
+  s2Shuffled=false;s2Pool=[...W];s2Used=0;
+  this.classList.add('on');document.getElementById('s2BtnShuffle').classList.remove('on');
+  renderS2();
+});
+document.getElementById('s2BtnShuffle').addEventListener('click',function(){
+  s2Shuffled=true;s2Pool=shuffle([...W]);s2Used=0;
+  this.classList.add('on');document.getElementById('s2BtnSeq').classList.remove('on');
+  renderS2();
+});
+
+function initS3(){s3Pool=[...W];s3Used=0;s3Shuffled=false;}
+function renderS3(){
+  if(s3Used>=s3Pool.length){s3Pool=s3Shuffled?shuffle([...W]):[...W];s3Used=0;}
+  const w=s3Pool[s3Used];
+  document.getElementById('s3Area').innerHTML=`
+    <div class="qblock">
+      <div class="qtext">看中文，手寫英文單字：</div>
+      <div class="hw-label">${numPfx(w)}${w.zh}</div>
+      <div class="hw-sub">音節提示：${w.syl}</div>
+      <canvas id="hwCanvas" width="480" height="120"></canvas>
+      <div class="fb" id="s3fb"></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--muted);text-align:center;">✍️ 寫完後按「確認」，自己對照答案</div>
+    </div>`;
+  initCanvas(w);
+}
+document.getElementById('s3BtnSeq').addEventListener('click',function(){
+  s3Shuffled=false;s3Pool=[...W];s3Used=0;
+  this.classList.add('on');document.getElementById('s3BtnShuffle').classList.remove('on');
+  renderS3();
+});
+document.getElementById('s3BtnShuffle').addEventListener('click',function(){
+  s3Shuffled=true;s3Pool=shuffle([...W]);s3Used=0;
+  this.classList.add('on');document.getElementById('s3BtnSeq').classList.remove('on');
+  renderS3();
+});
+function initCanvas(w){
+  canvas=document.getElementById('hwCanvas');
+  if(!canvas)return;
+  const maxW=Math.min(480,document.querySelector('.app').offsetWidth-52);
+  canvas.width=maxW;canvas.height=120;
+  ctx=canvas.getContext('2d');
+  function drawLine(){ctx.save();ctx.strokeStyle='#ddd';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(10,88);ctx.lineTo(canvas.width-10,88);ctx.stroke();ctx.restore();}
+  drawLine();
+  ctx.strokeStyle='#1a2340';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
+  drawing=false;canvas._w=w;
+  function pos(e){const r=canvas.getBoundingClientRect();const s=e.touches?e.touches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top};}
+  canvas.addEventListener('mousedown',e=>{drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  canvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+  canvas.addEventListener('mouseup',()=>drawing=false);
+  canvas.addEventListener('mouseleave',()=>drawing=false);
+  canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+  canvas.addEventListener('touchend',()=>drawing=false);
+}
+document.getElementById('btnClear').addEventListener('click',()=>{
+  if(canvas&&ctx){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.save();ctx.strokeStyle='#ddd';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(10,88);ctx.lineTo(canvas.width-10,88);ctx.stroke();ctx.restore();ctx.strokeStyle='#1a2340';ctx.lineWidth=3;}
+});
+document.getElementById('btnCheckS3').addEventListener('click',()=>{
+  const w=canvas?canvas._w:s3Pool[s3Used%s3Pool.length];
+  const fb=document.getElementById('s3fb');
+  fb.className='fb on good';
+  fb.innerHTML=`<div class="fb-lv">👍 對照答案</div>正確拼法：<span style="font-size:21px;color:var(--accent);font-weight:900;letter-spacing:2px">${w.en}</span>
+    <span style="font-size:12px;color:var(--muted);margin-left:8px;">（${w.syl}）</span><br>
+    <div style="margin-top:7px;display:flex;gap:7px;flex-wrap:wrap;">
+      <button class="ic-btn" id="s3snd">🔊 聽發音</button>
+      <button class="btn btn-primary" id="btnOK" style="font-size:12px;">✓ 我寫對了</button>
+      <button class="btn btn-danger" id="btnNG" style="font-size:12px;">✗ 寫錯了</button>
+    </div>`;
+  document.getElementById('s3snd').addEventListener('click',()=>speak(w.en));
+  document.getElementById('btnOK').addEventListener('click',()=>{addXP(10);s3Score++;setProg('s3Prog',Math.round(Math.min(s3Score,39)/39*100));markDone(4);s3Used++;renderS3();});
+  document.getElementById('btnNG').addEventListener('click',()=>{s3Used++;renderS3();});
+});
+document.getElementById('btnNextS3').addEventListener('click',()=>{s3Used++;renderS3();});
+
+function renderSent(){
+  const s=SENTS[sentIdx%SENTS.length];
+  const enHtml=s.en.replace(/<hl>(.*?)<\/hl>/g,'<span class="hl">$1</span>');
+  document.getElementById('sentArea').innerHTML=`
+    <div class="qblock">
+      <div class="sent-en">${enHtml}</div>
+      <div class="sent-zh">（${s.zh}）</div>
+      <div class="sent-task">${s.task}</div>
+      <textarea class="textarea" id="saEl" placeholder="在這裡輸入你的想法…"></textarea>
+      <div class="fb" id="sfb"></div>
+    </div>`;
+}
+document.getElementById('btnCheckSent').addEventListener('click',()=>{
+  const s=SENTS[sentIdx%SENTS.length];
+  const ans=(document.getElementById('saEl').value||'').toLowerCase();
+  const hits=s.keys.filter(k=>ans.includes(k.toLowerCase())).length;
+  const fb=document.getElementById('sfb');
+  fb.classList.add('on');
+  if(hits>=2||ans.length>20){
+    fb.className='fb on great';
+    fb.innerHTML=`<div class="fb-lv">🌟 讚！</div>你抓到了重點！<br><span style="color:var(--teal)">補充：</span>${s.hint}`;
+    addXP(10);sentScore++;setProg('sentProg',Math.round(Math.min(sentScore,SENTS.length)/SENTS.length*100));markDone(5);
+  } else if(hits>=1||ans.length>12){
+    fb.className='fb on good';
+    fb.innerHTML=`<div class="fb-lv">👍 方向對！</div>可以補充：<br><span style="color:var(--teal)">${s.hint}</span>`;
+    addXP(5);sentScore++;setProg('sentProg',Math.round(Math.min(sentScore,SENTS.length)/SENTS.length*100));
+  } else {
+    fb.className='fb on retry';
+    fb.innerHTML=`<div class="fb-lv">💪 再想想</div>${s.hint}<br>
+      <button class="btn btn-secondary" id="retryBtn" style="margin-top:6px;font-size:12px;">再試一次 🔄</button>`;
+    setTimeout(()=>{const rb=document.getElementById('retryBtn');if(rb)rb.addEventListener('click',()=>{document.getElementById('saEl').value='';document.getElementById('sfb').className='fb';});},50);
+  }
+});
+document.getElementById('btnNextSent').addEventListener('click',()=>{sentIdx++;renderSent();});
+
+function renderGram(){
+  const q=GRAMS[gramIdx%GRAMS.length];
+  const qHtml=q.q.replace('_____','<span class="gram-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+  document.getElementById('gramArea').innerHTML=`
+    <div class="qblock">
+      <div class="gram-q">請選出正確答案：<br><br>${qHtml}</div>
+      <div class="choice-grid">
+        ${q.cs.map((c,i)=>`<button class="choice-btn" data-i="${i}">${String.fromCharCode(65+i)}. ${c}</button>`).join('')}
+      </div>
+      <div class="gram-exp" id="gexp">${q.exp.replace(/\n/g,'<br>')}</div>
+    </div>`;
+  document.querySelectorAll('#gramArea .choice-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#gramArea .choice-btn').forEach(b=>b.disabled=true);
+      const i=parseInt(this.dataset.i);
+      if(i===q.ans){
+        this.classList.add('ok');
+        addXP(10);gramScore++;setProg('gramProg',Math.round(Math.min(gramScore,GRAMS.length)/GRAMS.length*100));markDone(6);
+      } else {
+        this.classList.add('no');
+        document.querySelectorAll('#gramArea .choice-btn')[q.ans].classList.add('rev');
+      }
+      document.getElementById('gexp').classList.add('on');
+    });
+  });
+}
+document.getElementById('btnNextGram').addEventListener('click',()=>{gramIdx++;renderGram();});
+
+function renderRead(){
+  let p=READ.passage;
+  READ.blanks.forEach(b=>{p=p.replace(`(${b.num})_____`,`<strong style="color:var(--accent)">(${b.num})</strong>`);});
+  const blanksHtml=READ.blanks.map((b,i)=>`
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:800;margin-bottom:6px;">空格 (${b.num}) 最佳答案：</div>
+      <div class="opts-row" id="opt${i}">
+        ${b.opts.map((o,j)=>`<button class="obtn" data-qi="${i}" data-j="${j}" data-ans="${b.ans}" data-exp="${encodeURIComponent(b.exp)}">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}
+      </div>
+      <div class="exp-box" id="rex${i}"></div>
+    </div>`).join('');
+  document.getElementById('readArea').innerHTML=`
+    <div class="cap-badge">🏆 類會考克漏字</div>
+    <div class="passage"><div class="ptitle">${READ.title}</div>${p}</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:14px;color:var(--accent);margin-bottom:10px;">選出最佳答案：</div>
+    ${blanksHtml}
+    <div class="cap-note">${READ.cap}</div>`;
+  document.querySelectorAll('.obtn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      const qi=parseInt(this.dataset.qi),j=parseInt(this.dataset.j);
+      const ans=parseInt(this.dataset.ans),exp=decodeURIComponent(this.dataset.exp);
+      document.querySelectorAll(`#opt${qi} .obtn`).forEach(b=>b.disabled=true);
+      this.classList.add(j===ans?'o-ok':'o-no');
+      if(j!==ans)document.querySelector(`#opt${qi} [data-j="${ans}"]`).classList.add('o-ok');
+      const box=document.getElementById('rex'+qi);box.textContent='✅ '+exp;box.style.display='block';
+      if(j===ans){addXP(8);readDone++;if(readDone===READ.blanks.length)markDone(7);}
+    });
+  });
+}
+
+function setProg(id,pct){const el=document.getElementById(id);if(el)el.style.width=pct+'%';}
+function markDone(unit){
+  const btn=document.querySelector(`[data-unit="${unit}"]`);
+  if(btn)btn.classList.add('done');
+  if(document.querySelectorAll('.unav.done').length>=5){
+    document.getElementById('summary').classList.add('on');
+    document.getElementById('sXP').textContent=XP;
+    document.getElementById('sFlip').textContent=flipCount;
+    document.getElementById('sSpell').textContent=s1Score+s2Score+s3Score;
+    document.getElementById('summary').scrollIntoView({behavior:'smooth'});
+  }
+}
+function shuffle(arr){return arr.sort(()=>Math.random()-.5);}
+function speak(txt){
+  if(!window.speechSynthesis)return;
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=0.88;
+  window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
+}
+
+applyLesson('L3');
+fcList=[...W];
+showCard();
+initS1();
+</script>
+</body>
+</html>
